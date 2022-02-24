@@ -2,11 +2,11 @@
 @section('style')
     <style>
         .bg-custom{background-color: #eee !important;}
-        .switch {position: relative; display: inline-block; width: 60px; height: 34px;}        
+        .switch {position: relative; display: inline-block; width: 60px; height: 34px;}
         .slider{background-color: #ccc; -webkit-transition: .4s;transition: .4s; left: 5px; height: 20px;}
-        .slider:before { background-color: white; bottom: 3px;}        
+        .slider:before { background-color: white; bottom: 3px;}
         input:checked + .slider { background-color: #2196F3;}
-        input:focus + .slider { box-shadow: 0 0 1px #2196F3;} 
+        input:focus + .slider { box-shadow: 0 0 1px #2196F3;}
         .hide_by_filter{display: none;}
         .plan-type .plan-type-btn{border:1px solid #aaa; padding:10px 15px;background: #fff;color:#000; box-shadow: 1px 2px 2px #aaa; margin-right: 5px;}
         .plan-type .active{background: #000; color:#fff; font-weight:bold;}
@@ -15,7 +15,10 @@
         .faq .card-header:hover{background: #ddd;}
         .faq .card-body{ background: rgb(240, 235, 235)}
         .faq .card-body p{margin: 0px; background: transparent !important; }
-        .bg-custom, .mobile-menu{display: none !important;}  
+        .bg-custom, .mobile-menu{display: none !important;}
+        @media only screen and (max-width: 600px){
+            .plus{margin-left:-30px}
+        }
     </style>
 @endsection
 @section('script')
@@ -32,7 +35,7 @@
                 $('.view-year').removeClass('d-none');
                 $('.view-month').addClass('d-none');
             }
-        }); 
+        });
 
         $(document).on("click", ".plan-type-btn", function(){
             $.each($(".plan-type-btn"), function(){
@@ -78,7 +81,7 @@
                     <div class="row mt-4">
                         <div class="col-12 text-center">
                             <h3>Our plans</h3>
-                            {{-- <p> 
+                            {{-- <p>
                                 Our plans are open to all types of Financial Advisors including both<br>
                                 Independent Financial Advisors and Restricted Advisors.
                             </p> --}}
@@ -88,7 +91,7 @@
                                 @endforeach
                             </div>
                             <div class="font-12">
-                                Prices shown are exclusive of VAT 
+                                Prices shown are exclusive of VAT
                             </div>
                         </div>
                     </div>
@@ -96,7 +99,7 @@
                 <div class="container-md-fluid">
                     <div class="row justify-content-center">
                         <div class="col-5 col-md-5 col-lg-5 mt-3 mb-3 text-right mr-0 pr-0" ; style="color:#000;font-size:17px;"><b>Billed monthly</b></div>
-                        <div class="col-3 col-sm-2 col-lg-1 mt-3 mb-3 text-center">                            
+                        <div class="col-3 col-sm-2 col-lg-1 mt-3 mb-3 text-center">
                             <label class="switch">
                                 <input type="checkbox" class="d-none package-filter">
                                 <span class="slider round" style="background-color:#28a745"></span>
@@ -106,8 +109,8 @@
                     </div>
                 </div>
                 <div class="container">
-                    <div class="row">               
-                        @foreach ($plans as $plan)                                        
+                    <div class="row">
+                        @foreach ($plans as $plan)
                             <div class="col-lg-4 col-md-6 subscription_plans {{ strpos($plan->duration_type, 'year') ? 'view-year' : 'view-month' }} {{ str_replace(" ", "_", $plan->profession->name ?? "") }}">
                                 <div class="ts-pricing-box {{ $loop->iteration % 2 == 0 ? 'ts-pricing-featured' : Null }} ">
                                     <div class="ts-pricing-header {{ $loop->iteration % 3 == 0 ? 'bg-success' : Null }}">
@@ -127,7 +130,7 @@
                                                     <h3>{{ $system->currency_symbol }}{{ $plan->price }} / {{ $plan->duration_type }} {{ $plan->charge_type }}</h3>
                                                 </li>
                                             @endif
-                                            
+
                                             @foreach($plan->subscription_plan_active_options as $option)
                                                 <li>
                                                     <i class="fas fa-check text-success"></i>
@@ -141,7 +144,7 @@
                                     </div>
                                 </div><!-- Plan 1 end -->
                             </div><!-- Col end -->
-                        @endforeach              
+                        @endforeach
                     </div> <!--/ Content row end -->
                 </div>
 
@@ -163,22 +166,22 @@
                                                             <a href="javascript::;" class="btn-link" data-toggle="collapse" data-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">
                                                                 <p class="mb-0 font-14 font-weight-bold">{{ $faq->question }}</p>
                                                             </a>
-                                                        </div>                                                
+                                                        </div>
                                                         <div class="col-sm-1 col-1 text-right">
-                                                            <button class="btn btn-link font-20 p-0" data-toggle="collapse" data-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">+</button>
+                                                            <button class="btn btn-link font-20 p-0 plus" data-toggle="collapse" data-target="#collapse{{$faq->id}}" aria-expanded="true" aria-controls="collapse{{$faq->id}}">+</button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            
+
                                                 <div id="collapse{{$faq->id}}" class="collapse" data-parent="#accordion">
                                                     <div class="card-body pt-2 pb-2">
                                                         <div class="row">
                                                             <div class="col-12 col-md-12">
                                                                 <p class="font-weight-bold font-14" style="color:#212529;background-color:#f9f9f9 !important">
                                                                     {!! $faq->answer !!}
-                                                                </p>                                              
+                                                                </p>
                                                             </div>
-                                                        </div>                                                
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -204,11 +207,11 @@
                                     ?>
                                     <div class="col-md-4 mt-2">
                                         <div class="card">
-                                            
-{{--                                             
+
+{{--
                                             <div class="row">
                                                 <div class="col-9 col-sm-9 row  mb-2">
-                                                    // Advisor Image 
+                                                    // Advisor Image
                                                     <div class="col-4 mt-1">
                                                         <img style="display:none" src="{{ asset(file_exists($advisor->image) ? $advisor->image : 'image/dummy_user.jpg') }}" class="img-fluid rounded-circle img-thumbnail ml-1" style="width:55px; height:55px;">
                                                     </div>
@@ -218,7 +221,7 @@
                                                             {{ $advisor->first_name }} {{ $advisor->last_name }}
                                                         </h4>
                                                         <p class="font-12" style="margin-top:15px;">
-                                                            {{ $advisor->profession->name ?? "" }} 
+                                                            {{ $advisor->profession->name ?? "" }}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -227,7 +230,7 @@
                                                     <h4 class="font-13 text-dark p-0 m-0">{{ $blog->read_time }} min read</h4>
                                                 </div>
                                             </div> --}}
-                                            
+
                                             <div class="row">
                                                 <div class="col-12">
                                                     <img src="{{ asset($blog->image ?? 'image/not-found.png') }}" class="card-img-top" alt="Image" style="height:180px">

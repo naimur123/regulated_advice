@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\BackEnd;
 
 use App\AdvisorBillingInfo;
+use App\AdvisorCompliance;
+use App\AdvisorQuestion;
+use App\Interview;
+use App\Testimonial;
 use App\Http\Controllers\Controller;
 use App\SubscriptionPlan;
 use App\System;
@@ -21,14 +25,14 @@ class OfficeManagerController extends Controller
      * Get Table Column List
      */
     private function getColumns(){
-        return ['#', 'firstName', 'last_name', 'email', 'phone', 'post_code',  'created_by', 'updated_by', 'action'];
+        return ['#', 'office_manager_name', 'email', 'phone', 'post_code',  'created_by', 'updated_by', 'action'];
     }
 
     /**
      * Get DataTable Column List
      */
     private function getDataTableColumns(){
-        return ['index', 'first_name', 'last_name', 'email', 'phone', 'post_code', 'created_by', 'updated_by', 'action'];
+        return ['index', 'office_manager_name', 'email', 'phone', 'post_code', 'created_by', 'updated_by', 'action'];
     }
 
 
@@ -42,11 +46,11 @@ class OfficeManagerController extends Controller
     /**
      * Show Office Manager List  without Archive
      */
-    public function index(Request $request){        
+    public function index(Request $request){
         if( $request->ajax() ){
             return $this->getDataTable();
         }
-        
+
         $params = [
             'nav'               => 'office_manager',
             'subNav'            => 'list',
@@ -58,7 +62,7 @@ class OfficeManagerController extends Controller
             'tableStyleClass'   => 'bg-success',
             'modalSizeClass'    => "modal-lg",
             'table_responsive'  => "table-responsive",
-            
+
         ];
         return view('backEnd.table', $params);
     }
@@ -75,7 +79,7 @@ class OfficeManagerController extends Controller
             "subscription_plans" => SubscriptionPlan::where("office_manager", true)->get(),
             "edit"      => false,
         ];
-        $this->saveActivity($request, "Create Office Manager page open"); 
+        $this->saveActivity($request, "Create Office Manager page open");
         return view('backEnd.office-manager.create', $params)->render();
     }
 
@@ -83,7 +87,7 @@ class OfficeManagerController extends Controller
      * Store Office Manager Information
      */
     public function store(Request $request){
-        try{ 
+        try{
             $validator = Validator::make($request->all(),[
                 "first_name"        => ['required','string', "min:2"],
                 "last_name"         => ['nullable','string','min:1'],
@@ -117,45 +121,45 @@ class OfficeManagerController extends Controller
             ]);
             if($validator->fails()){
                 return back()->withErrors($validator->errors())->withInput()->with("error", $this->getValidationError($validator));
-            }               
+            }
             if( $request->id == 0 ){
                 $data = $this->getModel();
                 $data->created_by = $request->user()->id;
                 $message = 'Office Manager information added successfully';
-                $this->saveActivity($request, "Create new Office Manager"); 
+                $this->saveActivity($request, "Create new Office Manager");
             }else{
                 $message = 'Office Manager information updated successfully';
                 $data = $this->getModel()->withTrashed()->find($request->id);
                 $data->updated_by = $request->user()->id;
-                $this->saveActivity($request, "Update Office Manager info", $data); 
+                $this->saveActivity($request, "Update Office Manager info", $data);
             }
             $advisor = $this->saveOfficeManagerInfo($data, $request);
             (new AdvisorController())->saveFirmInfo($request, $advisor);
             (new AdvisorController())->saveBillingInfo($request, $advisor);
-            
+
             return back()->with("success", $message);
         }catch(Exception $e){
             return back()->with("error", $this->getError($e));
         }
-        
+
     }
 
     /**
      * Save OfficeManager Info
      */
     protected function saveOfficeManagerInfo($data, $request){
-        $data->first_name = $request->first_name;            
-        $data->last_name = $request->last_name;            
+        $data->first_name = $request->first_name;
+        $data->last_name = $request->last_name;
         $data->email = $request->email;
         $data->phone = $request->phone;
-        
+
         $data->password = !empty($request->password) ? bcrypt($request->password) : $data->password;
         $data->address_line_one = $request->address_line_one;
         $data->address_line_two = $request->address_line_two;
         $data->post_code = $request->post_code;
         $data->town = $request->town;
         $data->country = $request->country;
-        $data->subscription_plan_id = $request->subscription_plan_id;        
+        $data->subscription_plan_id = $request->subscription_plan_id;
         $data->terms_and_condition_agree_date = $request->terms_and_condition_agree_date;
         $data->is_live = false;
         $data->save();
@@ -175,7 +179,7 @@ class OfficeManagerController extends Controller
             "edit"      => true,
             "data"      => User::find($request->id),
         ];
-        $this->saveActivity($request, "Edit Office Manager page open"); 
+        $this->saveActivity($request, "Edit Office Manager page open");
         return view('backEnd.office-manager.create', $params)->render();
     }
 
@@ -188,6 +192,27 @@ class OfficeManagerController extends Controller
         return view('backEnd.office-manager.view-billing', $params)->render();
     }
 
+     /**
+     * Permanently Delete
+     */
+    public function delete(Request $request){
+        try{
+            $data = $this->getModel()->withTrashed()->find($request->id);
+            AdvisorBillingInfo::where('advisor_id', $data->id)->delete();
+            Testimonial::where('advisor_id', $data->id)->forceDelete();
+            AdvisorQuestion::where('advisor_id', $data->id)->forceDelete();
+            AdvisorCompliance::where('advisor_id', $data->id)->delete();
+            Interview::where('advisor_id', $data->id)->delete();
+
+            $this->saveActivity($request, "Office Manager deleted", $data);
+            $data->forceDelete();
+            $this->success(' Office Manager deleted successfully');
+        }catch(Exception $e){
+            $this->message = $this->getError($e);
+        }
+        return $this->output();
+    }
+
 
     /**
      * Make the selected Office Manager As Archive
@@ -197,7 +222,7 @@ class OfficeManagerController extends Controller
             $data = $this->getModel()->withTrashed()->find($request->id);
             $data->delete();
             $this->success('Archive deleted successfully');
-            $this->saveActivity($request, "Delete Office Manager"); 
+            $this->saveActivity($request, "Delete Office Manager");
         }catch(Exception $e){
             $this->message = $this->getError($e);
         }
@@ -253,11 +278,12 @@ class OfficeManagerController extends Controller
         $data = $data->orderBy('created_at', 'DESC')->orderBy('id', 'DESC')->select("advisors.*")->get();
 
         return DataTables::of($data)
-            ->addColumn('index', function(){ return ++$this->index; })  
-            ->addColumn('action', function($row) use($type){  
+            ->addColumn('index', function(){ return ++$this->index; })
+            ->addColumn('office_manager_name', function($row){ return ($row->first_name. ' '. $row->last_name ); })
+            ->addColumn('action', function($row) use($type){
                 $li = "";
                 if($type == 'list'){
-                    $li = '<a href="'.route('advisor.view',['id' => $row->id]).'" class="btn btn-sm btn-primary" title="Advisor Profile" target="_blank"> <span class="fa fa-user fa-lg"></span> Advisor Admin</a> '; 
+                    $li = '<a href="'.route('advisor.view',['id' => $row->id]).'" class="btn btn-sm btn-primary" title="Advisor Profile" target="_blank"> <span class="fa fa-user fa-lg"></span> Advisor Admin</a> ';
                 }
                 $li .= '<a href="'.route('office_manager.edit',['id' => $row->id]).'" class="btn btn-sm btn-warning" title="Edit" > <span class="fa fa-edit fa-lg"></span> Edit</a> ';
                 $li .= '<a href="'.route('office_manager.view_billing',['id' => $row->id]).'" class="btn btn-sm btn-info ajax-click-page" title="View Billing Info" > <span class="fa fa-eye fa-lg"></span> Billing Info</a> ';
@@ -266,21 +292,21 @@ class OfficeManagerController extends Controller
                     $li .= '<a href="'.route('advisor.make_email_verify',['id' => $row->id]).'" class="ajax-click btn btn-sm btn-success" title="Make Email Verify" > <i class="far fa-check-square fa-lg"></i> Manually Verify</a> ';
                     $li .= '<a href="'.route('advisor.send_email_verification',['id' => $row->id]).'" class="ajax-click btn btn-sm btn-warning" title="Send Verification Email" > <span class="far fa-envelope fa-lg"></span> Send verification email </a> ';
                 }
-                
+
                 if($type == 'list'){
                     if(AccessController::checkAccess("admin_delete")){
-                        $li .= '<a href="'.route('advisor.archive',['id' => $row->id]).'" class="ajax-click btn btn-sm btn-danger " > <span class="fa fa-trash fa-lg" title="Delete" ></span> Delete</a> ';
+                        $li .= '<a href="'.route('office_manager.archive',['id' => $row->id]).'" class="ajax-click btn btn-sm btn-danger " > <span class="fa fa-trash fa-lg" title="Delete" ></span> Delete</a> ';
                     }
                 }else{
                     if(AccessController::checkAccess("admin_restore")){
-                        $li .= '<a href="'.route('advisor.restore',['id' => $row->id]).'" class="ajax-click btn btn-sm btn-danger" > <i class="fas fa-redo fa-lg"></i> Restore</a> ';
+                        $li .= '<a href="'.route('office_manager.restore',['id' => $row->id]).'" class="ajax-click btn btn-sm btn-danger" > <i class="fas fa-redo fa-lg"></i> Restore</a> ';
                     }
                     if(AccessController::checkAccess("admin_delete")){
-                        $li .= '<a href="'.route('advisor.delete',['id' => $row->id]).'" class="ajax-click btn btn-sm btn-danger " > <span class="fa fa-trash fa-lg" title="Delete" ></span> Permanent Delete</a> ';
+                        $li .= '<a href="'.route('office_manager.delete',['id' => $row->id]).'" class="ajax-click btn btn-sm btn-danger " > <span class="fa fa-trash fa-lg" title="Delete" ></span> Permanent Delete</a> ';
                     }
                 }
                 return $li;
-            })           
+            })
             ->addcolumn('profile_name', function($row){ return $row->firm_details->profile_name; })
             ->editColumn('status', function($row){ return $this->getStatus($row->status); })
             ->addColumn("email_verify", function($row){ return !empty($row->email_verified_at) ? $this->getStatus('verified') : $this->getStatus('not_verified') ; })
@@ -290,6 +316,6 @@ class OfficeManagerController extends Controller
             ->make(true);
     }
 
-    
-    
+
+
 }

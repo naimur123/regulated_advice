@@ -21,8 +21,8 @@ return [
     "full_name"     => "Full Name",
     "short_name"    => "Short Name",
     "firstName"     => "First Name",
-    "reason"        => "Primary Region",  
-    'first_name'    => "Advisor Name",
+    "reason"        => "Primary Region",
+    'first_name'    => "First Name",
     "last_name"     => "Last Name",
     "primaty_reason" => "Primary Region",
     "subscription"  => "Subscription",
@@ -39,6 +39,7 @@ return [
     "price"         => "Price",
     "duration"      => "Duration",
     "advisor"       => "Advisor Name",
+    "office_manager_name" => "Office Manager Name",
     'message'       => "Message",
     "subject"       => "Subject",
     "question"      => "Question",
@@ -61,7 +62,7 @@ return [
     "subscribed"    => "Subscribed",
     "mobile_number" => "Mobile Number",
     "assign_number" => "Assigned Number",
-    "personal_fca_no"=> "Personal FCA No",  
+    "personal_fca_no"=> "Personal FCA No",
     'advisor_type'  => "Advisor Type",
     'status'        => "Status",
     'profile_name'  => 'Profile Name',
@@ -93,7 +94,7 @@ return [
     "footer"                    => "Email Footer",
     "send_mail"                 => "Send Email",
     "no_of_question"            => "Number of Questions",
-    "star"                      => "Stars ", 
+    "star"                      => "Stars ",
     "bid_increment"             => "Bid Increment",
     'reserve_price'             => "Reserve Price",
     "current_bid_price"         => "Current Bid Price",
@@ -111,5 +112,5 @@ return [
     "send_to_cc"                => "Send To CC",
     "author"                    => "Author",
     "office_manager"            => "Office Manager",
-    
+
 ];

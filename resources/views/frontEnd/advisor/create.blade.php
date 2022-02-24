@@ -107,7 +107,7 @@
                     </div>
 
                     <!-- Telephone Number -->
-                    <div class="col-12 col-sm-6 col-md-4">
+                    {{-- <div class="col-12 col-sm-6 col-md-4">
                         <div class="form-group">
                             <label>Assigned Telephone Number</label>
                             <input type="text" maxlength="11" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }} verify" data-verify_type="phone" name="telephone" value="{{ old("telephone") ?? ($data->telephone ?? "")}}"   >
@@ -117,10 +117,10 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Telephone Number -->
-                    <div class="col-12 col-sm-6 col-md-4">
+                    {{-- <div class="col-12 col-sm-6 col-md-4">
                         <div class="form-group">
                             <br>
                             <label class="mt-3">
@@ -133,7 +133,7 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Personal FCA Ref. Number -->
                     <div class="col-12 col-sm-6 col-md-4">
@@ -149,7 +149,7 @@
                     </div>
 
                     <!--  FCA Status Effective Date -->
-                    <div class="col-12 col-sm-6 col-md-4">
+                    {{-- <div class="col-12 col-sm-6 col-md-4">
                         <div class="form-group">
                             <label>FCA Status Effective Date</label>
                             <input type="date" class="form-control{{ $errors->has('fca_status_date') ? ' is-invalid' : '' }}" name="fca_status_date" value="{{ old("fca_status_date") ?? ($data->fca_status_date ?? "")}}" >
@@ -159,7 +159,7 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!--  Address 1 -->
                     <div class="col-12 col-sm-6 col-md-4">
@@ -290,7 +290,7 @@
                     </div>
 
                     <!-- Select Primary Region -->
-                    <div class="col-12 col-sm-6 col-md-4">
+                    {{-- <div class="col-12 col-sm-6 col-md-4">
                         <div class="form-group">
                             <label>Primary Region <span class="text-danger">*</span></label>
                             <select class="form-control select2" name="primary_region_id" required>
@@ -305,7 +305,7 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Select Subscribed Primary Region -->
                     <div class="col-12 col-sm-6 col-md-4" style="display: none;">
@@ -344,12 +344,12 @@
                     </div>-->
 
                     <!-- Date Agree of Trems & condition -->
-                    <div class="col-12 col-sm-6 col-md-4">
+                    {{-- <div class="col-12 col-sm-6 col-md-4">
                         <div class="form-group">
                             <label>Date Agreeing to Terms and Conditions</label>
                             <input type="date" name="terms_and_condition_agree_date" class="form-control" value="{{ isset($data->terms_and_condition_agree_date) ? $data->terms_and_condition_agree_date : Carbon\Carbon::parse($data->created_at ?? now())->format('Y-m-d') }}" >
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Number of Subscription Accounts -->
                     <!--<div class="col-12 col-sm-6 col-md-4">
@@ -394,6 +394,14 @@
                         </div>
                     </div>
 
+                      <!-- About Me -->
+                      <div class="col-12">
+                        <div class="form-group">
+                            <label>About Me </label>
+                            <textarea name="profile_brief" class="form-control editor"  style="min-height: 150px">{{ old('profile_brief') ?? ($data->profile_brief ?? '') }}</textarea>
+                        </div>
+                      </div>
+
                     <!-- Type of Advisor -->
                     <div class="col-12  col-md-6">
                         <div class="form-group">
@@ -411,12 +419,6 @@
                             @endif
 
                         </div>
-                    </div>
-
-                    <!--Image-->
-                    <div class="col-12 col-sm-4">
-                        <label>Advisor Profile Picture</label>
-                        <input type="file" name="image" >
                     </div>
 
                     <div class="col-12">
@@ -450,7 +452,7 @@
                         @endif
                     </div>
 
-                    <div class="col-12">
+                    {{-- <div class="col-12">
                         <hr/>
                         <h3 class="font-weight-bold">Subscription Postcodes</h3><br>
                         @foreach ($subscribe_reasons as $reason)
@@ -458,7 +460,7 @@
                                 <div class="col-12">
                                     <h4 class="p-0 m-0 mt-2">
                                         <label class="font-weight-bold font-16">
-                                            <input type="checkbox" class="select-all_reason"   disabled="disabled" checked="checked"> {{$reason->name }}
+                                            <input type="checkbox" class="select-all_reason"   disabled="disabled" readonly> {{$reason->name }}
                                         </label>
                                     </h4>
                                     <div class="line line-blue"></div>
@@ -466,7 +468,7 @@
 
                                 @foreach ($reason->location_post_codes as $location)
                                     <div class="col-6 col-sm-4 col-md-3 mt-1 location">
-                                        <label> <input type="checkbox"   disabled="disabled" checked="checked" value="{{ $location->id }}" name="subscribe_location_postcode_id[]" {{ isset($data->subscribe_location_postcode_id) && is_array($data->subscribe_location_postcode_id) && in_array($location->id, $data->subscribe_location_postcode_id) ? "checked" : Null }}> {{ $location->full_name }} </label>
+                                        <label> <input type="checkbox"   disabled="disabled" readonly value="{{ $location->id }}" name="subscribe_location_postcode_id[]" {{ isset($data->subscribe_location_postcode_id) && is_array($data->subscribe_location_postcode_id) && in_array($location->id, $data->subscribe_location_postcode_id) ? "checked" : Null }}> {{ $location->full_name }} </label>
                                     </div>
                                 @endforeach
                             </div>
@@ -478,15 +480,21 @@
                                 </span>
                             </div>
                         @endif
+                    </div> --}}
+
+                     <!--Image-->
+                     <div class="col-12 mt-3">
+                        <label><b>Profile Picture</b></label><br>
+                        <input type="file" name="image" >
                     </div>
 
-                    <div class="col-12 mt-5">
+                    {{-- <div class="col-12 mt-5">
                         <h3>Firm Details</h3>
                         <hr/>
-                    </div>
+                    </div> --}}
 
                     <!-- Firm Profile Name -->
-                    <div class="col-4">
+                    {{-- <div class="col-4">
                         <div class="form-group">
                             <label>Profile Name {!! $edit ? '<span class="text-danger">*</span>' : ''!!}</label>
                             <input type="text" class="form-control{{ $errors->has('profile_name') ? ' is-invalid' : '' }}" name="profile_name" value="{{ old("profile_name") ?? ($data->firm_details->profile_name ?? "")}}" {{ $edit ? 'required' : Null }}>
@@ -496,12 +504,12 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
 
 
                     <!-- Firm FCA Ref. Number -->
-                    <div class="col-4">
+                    {{-- <div class="col-4">
                         <div class="form-group">
                             <label>Firm FCA Ref. Number {!! $edit ? '<span class="text-danger">*</span>' : ''!!}</label>
                             <input type="text" class="form-control{{ $errors->has('firm_fca_number') ? ' is-invalid' : '' }}" name="firm_fca_number" value="{{ old("firm_fca_number") ?? ($data->firm_details->firm_fca_number ?? "")}}" {{ $edit ? 'required' : null }}>
@@ -511,10 +519,10 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Firm Website URL -->
-                    <div class="col-4">
+                    {{-- <div class="col-4">
                         <div class="form-group">
                             <label>Firm Website URL {!! $edit ? '<span class="text-danger">*</span>' : ''!!}</label>
                             <input type="url" class="form-control{{ $errors->has('firm_website_address') ? ' is-invalid' : '' }}" name="firm_website_address" value="{{ old("firm_website_address") ?? ($data->firm_details->firm_website_address ?? "")}}" {{ $edit ? 'required' : null }} >
@@ -524,10 +532,10 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Linkedin URL -->
-                    <div class="col-4">
+                    {{-- <div class="col-4">
                         <div class="form-group">
                             <label>Linkedin URL</label>
                             <input type="url" class="form-control{{ $errors->has('linkedin_id') ? ' is-invalid' : '' }}" name="linkedin_id" value="{{ old("linkedin_id") ?? ($data->firm_details->linkedin_id ?? "")}}" >
@@ -537,9 +545,9 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- Firm profile_details -->
-                    <div class="col-4 d-none">
+                    {{-- <div class="col-4 d-none">
                         <div class="form-group">
                             <label>Firm Details </label>
                             <textarea class="form-control{{ $errors->has('profile_details') ? ' is-invalid' : '' }}" name="profile_details" >{{ old("profile_details") ?? ($data->firm_details->profile_details ?? "")}}</textarea>
@@ -549,24 +557,24 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
 
-                    <div class="col-12 mt-5">
+                    {{-- <div class="col-12 mt-5">
                         <h3>Advisor Billing Info</h3>
                         <hr/>
-                    </div>
+                    </div> --}}
 
                     <!-- Bolling ID -->
-                    <div class="col-12 col-sm-6 col-md-4">
+                    {{-- <div class="col-12 col-sm-6 col-md-4">
                         <div class="form-group">
                             <label>Billing ID</label>
                             <input type="text" class="form-control" value="{{ $billing_info->id }}" readonly >
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!--  Address 1 -->
-                    <div class="col-12 col-sm-6 col-md-4">
+                    {{-- <div class="col-12 col-sm-6 col-md-4">
                         <div class="form-group">
                             <label>Address Line 1 <span class="text-danger">*</span></label>
                             <input type="text" class="form-control{{ $errors->has('billing_address_line_one') ? ' is-invalid' : '' }}" name="billing_address_line_one" id="billing_address_line_one" value="{{ old("billing_address_line_one") ?? ($billing_info->billing_address_line_one ?? "")}}" required readonly >
@@ -576,10 +584,10 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!--  Address 2 -->
-                    <div class="col-12 col-sm-6 col-md-4">
+                    {{-- <div class="col-12 col-sm-6 col-md-4">
                         <div class="form-group">
                             <label>Address Line 2</label>
                             <input type="text" class="form-control{{ $errors->has('billing_address_line_two') ? ' is-invalid' : '' }}" name="billing_address_line_two" id="billing_address_line_two" value="{{ old("billing_address_line_two") ?? ($billing_info->billing_address_line_two ?? "")}}" readonly>
@@ -589,10 +597,10 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!--  Company Name -->
-                    <div class="col-12 col-sm-6 col-md-4">
+                    {{-- <div class="col-12 col-sm-6 col-md-4">
                         <div class="form-group">
                             <label>Company Name</label>
                             <input type="text" class="form-control{{ $errors->has('billing_company_name') ? ' is-invalid' : '' }}" name="billing_company_name" id="billing_company_name" value="{{ old("billing_company_name") ?? ($billing_info->billing_company_name ?? "")}}" readonly>
@@ -602,10 +610,10 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!--  Address 2 -->
-                    <div class="col-12 col-sm-6 col-md-4">
+                    {{-- <div class="col-12 col-sm-6 col-md-4">
                         <div class="form-group">
                             <label>Company Number</label>
                             <input type="text" class="form-control{{ $errors->has('billing_company_fca_number') ? ' is-invalid' : '' }}" name="billing_company_fca_number" id="billing_company_fca_number" value="{{ old("billing_company_fca_number") ?? ($billing_info->billing_company_fca_number ?? "")}}" readonly >
@@ -615,11 +623,11 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
 
                     <!--  Town -->
-                    <div class="col-4">
+                    {{-- <div class="col-4">
                         <div class="form-group">
                             <label>Town</label>
                             <input type="text" class="form-control{{ $errors->has('billing_town') ? ' is-invalid' : '' }}" name="billing_town" id="billing_town" value="{{ old("billing_town") ?? ($billing_info->billing_town ?? "")}}" readonly >
@@ -629,10 +637,10 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!--  County -->
-                    <div class="col-4">
+                    {{-- <div class="col-4">
                         <div class="form-group">
                             <label>County <span class="text-danger">*</span></label>
                             <input type="text" class="form-control{{ $errors->has('billing_country') ? ' is-invalid' : '' }}" name="billing_country" value="{{ old("billing_country") ?? ($billing_info->billing_country ?? "")}}" id="billing_country" required readonly >
@@ -642,10 +650,10 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!--  Postcode -->
-                    <div class="col-4">
+                    {{-- <div class="col-4">
                         <div class="form-group">
                             <label>Postcode <span class="text-danger">*</span></label>
                             <input type="text" class="form-control{{ $errors->has('billing_post_code') ? ' is-invalid' : '' }}" name="billing_post_code" id="billing_post_code" value="{{ old("billing_post_code") ?? ($billing_info->billing_post_code ?? "")}}" required readonly >
@@ -655,7 +663,7 @@
                                 </span>
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!--submit -->
                     <div class="col-12 text-right">

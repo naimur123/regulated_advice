@@ -5,7 +5,7 @@
 @section('mainPart')
     <section style="background-size: cover;background-repeat: no-repeat;background-position: center; background-image: url('{{ asset('image/financial.jpg') }}')">
         <div class="container-fluid">
-            <div class="row justify-content-center" style="min-height: 250px">
+            <div class="row justify-content-center" style="min-height: 200px">
             </div>
         </div>
     </section>
@@ -22,9 +22,9 @@
                     When you find an advisor with us, you can be sure they are regulated. All the advisors listed with us are regulated by the relevant official bodies,  appropriately quali-fied and independent of product providers.  Ask a question or use our search to find ex-actly what you need in seconds –including independent financial advice, restricted ad-vice and best mortgage advice
                 </p>
             </div>
-            
+
             <div class="col-6 col-md-5 mt-2 text-center">
-                <br/>            
+                <br/>
                 <img src="{{ asset('image/ekomi-single.png') }}" class="img-fluid">
             </div>
             <div class="col-6 col-md-5 mt-2 text-center">
@@ -75,7 +75,7 @@
             <div class="row">
                 <div class="col-12 text-right">
                     <button class="btn btn-default close-popup" title="Close"><i class="far fa-times-circle" style="font-size:36px;color:red;"></i></button>
-                </div>                
+                </div>
             </div>
             <div class="container-md">
                 <div class="row">

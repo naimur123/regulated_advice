@@ -39,7 +39,7 @@ class AdvisorController extends Controller
      * Get Table Column List
      */
     private function getColumns(){
-        $columns = ['#', "date", "first_name", 'email', 'assign_number', "mobile_number", 'personal_fca_no', 'advisor_type', 'profile_name' ,'primaty_reason', 'area_covered', 'plan', 'subscribed', 'status', "live", 'email_verify', 'action',];
+        $columns = ['#', "date", "advisor", 'email', 'assign_number', "mobile_number", 'personal_fca_no', 'advisor_type', 'profile_name' ,'primaty_reason', 'area_covered', 'plan', 'subscribed', 'status', "live", 'email_verify', 'action',];
         return $columns;
     }
 
@@ -47,7 +47,7 @@ class AdvisorController extends Controller
      * Get DataTable Column List
      */
     private function getDataTableColumns(){
-        $columns = ['index', "date", 'name', 'email', 'telephone', "phone", 'personal_fca_number', 'profession', 'profile_name', 'primary_reason', 'area_covered', 'subscription', 'subscribe', 'status', "live", 'email_verify','action'];
+        $columns = ['index', "date", 'advisor', 'email', 'telephone', "phone", 'personal_fca_number', 'profession', 'profile_name', 'primary_reason', 'area_covered', 'subscription', 'subscribe', 'status', "live", 'email_verify','action'];
         return $columns;
     }
 
@@ -57,17 +57,17 @@ class AdvisorController extends Controller
      * Get Table Column List
      */
     private function getColumns2(){
-        $columns = ['#', "date", "first_name", 'email', 'assign_number', "mobile_number", 'personal_fca_no', 'advisor_type', 'profile_name', 'primaty_reason', 'area_covered', 'subscribe_area_covered','plan', "non_specific_rating", 'subscribed',  'status', "live", 'email_verify', 'action',];
+        $columns = ['#', "date", "advisor", 'email', 'assign_number', "mobile_number", 'personal_fca_no', 'advisor_type', 'profile_name', 'primaty_reason', 'area_covered', 'subscribe_area_covered','plan', "non_specific_rating", 'subscribed',  'status', "live", 'email_verify', 'action',];
         return $columns;
     }
 
-    
+
 
     /**
      * Get DataTable Column List
      */
     private function getDataTableColumns2(){
-        $columns = ['index', "date", 'name', 'email', 'telephone', "phone", 'personal_fca_number', 'profession', 'profile_name', 'primary_reason', 'area_covered', 'subscribe_area_covered','subscription', "non_specific_rating", 'subscribe', 'status', "live", 'email_verify','action'];
+        $columns = ['index', "date", 'advisor', 'email', 'telephone', "phone", 'personal_fca_number', 'profession', 'profile_name', 'primary_reason', 'area_covered', 'subscribe_area_covered','subscription', "non_specific_rating", 'subscribe', 'status', "live", 'email_verify','action'];
         return $columns;
     }
 
@@ -81,11 +81,11 @@ class AdvisorController extends Controller
     /**
      * Show advisor List  without Archive
      */
-    public function index(Request $request){        
+    public function index(Request $request){
         if( $request->ajax() ){
             return $this->getDataTable($request, "list");
         }
-        $this->saveActivity($request, "View Advisor List"); 
+        $this->saveActivity($request, "View Advisor List");
         $params = [
             'nav'               => 'advisor',
             'subNav'            => 'advisor.list',
@@ -108,11 +108,11 @@ class AdvisorController extends Controller
     /**
      * Show Deleted advisor List
      */
-    public function deletedAdvisorList(Request $request){        
+    public function deletedAdvisorList(Request $request){
         if( $request->ajax() ){
             return $this->getDataTable($request, "deleted");
         }
-        $this->saveActivity($request, "View Deleted Advisor List"); 
+        $this->saveActivity($request, "View Deleted Advisor List");
         $params = [
             'nav'               => 'advisor',
             'subNav'            => 'advisor.archived_list',
@@ -127,17 +127,17 @@ class AdvisorController extends Controller
     /**
      * Show Filter advisor List
      */
-    public function filterAdvisor(Request $request){        
+    public function filterAdvisor(Request $request){
         if( $request->ajax() ){
             return $this->getDataTable($request, "list");
         }
-        
+
         $params = [
             'nav'               => 'advisor',
             'subNav'            => 'advisor.list',
             'tableColumns'      => $this->getColumns(),
             'dataTableColumns'  => $this->getDataTableColumns(),
-            'dataTableUrl'      => Null,           
+            'dataTableUrl'      => Null,
             'pageTitle'         => 'Filter Advisor List',
             'tableStyleClass'   => 'bg-success',
             'tableStyleClass2'   => 'bg-primary'
@@ -149,7 +149,7 @@ class AdvisorController extends Controller
      * Create New Admin
      */
     public function create(Request $request){
-        $this->saveActivity($request, "Advisor Creation Page Open"); 
+        $this->saveActivity($request, "Advisor Creation Page Open");
         $params = [
             'nav'               => 'advisor',
             'subNav'            => 'advisor.create',
@@ -162,8 +162,8 @@ class AdvisorController extends Controller
             "professions"       => Profession::where("publication_status", true)->orderBy("name", "ASC")->get(),
             "service_offers"    => ServiceOffer::where("publication_status", true)->orderBy("id", "ASC")->get(),
             "fund_sizes"        => FundSize::where("publication_status", true)->orderBy("min_fund", "ASC")->get(),
-            "edit"              => false, 
-        ]; 
+            "edit"              => false,
+        ];
         return view('backEnd.advisor.create', $params);
     }
 
@@ -209,7 +209,7 @@ class AdvisorController extends Controller
             if( !$response["status"] ){
                 return back()->withInput()->withErrors( ["post_code" => $response["message"] ]);
             }
-            
+
             DB::beginTransaction();
             if( $request->id == 0 ){
                 $data = $this->getModel();
@@ -221,9 +221,9 @@ class AdvisorController extends Controller
                 $data->updated_by = $request->user()->id;
             }
 
-            $data->profession_id = $request->profession_id;            
-            $data->first_name = $request->first_name;            
-            $data->last_name = $request->last_name;            
+            $data->profession_id = $request->profession_id;
+            $data->first_name = $request->first_name;
+            $data->last_name = $request->last_name;
             $data->email = $request->email;
             $data->phone = $request->phone;
             $data->telephone = $request->telephone;
@@ -268,7 +268,7 @@ class AdvisorController extends Controller
             return back()->with("error", $this->getError($e))->withInput();
         }
 
-        $this->saveActivity($request, "Add New Advisor", $data); 
+        $this->saveActivity($request, "Add New Advisor", $data);
         return back()->with ("success",  $request->id == 0 ? "Advisor Basic Information Added Successfully" : "Advisor Basic Information Updated Successfully");
     }
 
@@ -278,7 +278,7 @@ class AdvisorController extends Controller
     public function saveFirmInfo($request, $advisor){
         $data = $advisor->firm_details;
         if(empty($data)){
-            $data = new FirmDetails();            
+            $data = new FirmDetails();
             $data->created_by = $request->created_by;
         }else{
             $data->updated_by = $request->updated_by;
@@ -290,7 +290,7 @@ class AdvisorController extends Controller
         $data->firm_website_address = $request->firm_website_address;
         $data->linkedin_id = $request->linkedin_id;
         $data->save();
-        $this->saveActivity($request, "Save Advisor Firm Info", $data); 
+        $this->saveActivity($request, "Save Advisor Firm Info", $data);
     }
 
     /**
@@ -314,7 +314,7 @@ class AdvisorController extends Controller
         $data->billing_company_name = $request->billing_company_name;
         $data->billing_company_fca_number = $request->billing_company_fca_number;
         $data->save();
-        $this->saveActivity($request, "Save Advisor Billing Info", $data); 
+        $this->saveActivity($request, "Save Advisor Billing Info", $data);
     }
 
     /**
@@ -322,7 +322,7 @@ class AdvisorController extends Controller
      */
     public function edit(Request $request){
         $advisor = $this->getModel()->withTrashed()->find($request->id);
-        
+
         $params = [
             'nav'               => 'advisor',
             'subNav'            => 'advisor.create',
@@ -337,7 +337,7 @@ class AdvisorController extends Controller
             "fund_sizes"        => FundSize::where("publication_status", true)->orderBy("min_fund", "ASC")->get(),
             "data"              => $advisor,
             "edit"              => true,
-        ]; 
+        ];
         $this->saveActivity($request, "Advisor Edit Page Open", $advisor);
         return view('backEnd.advisor.create', $params);
     }
@@ -366,7 +366,7 @@ class AdvisorController extends Controller
      */
     public function archive(Request $request){
         try{
-            
+
             $data = $this->getModel()->withTrashed()->find($request->id);
             $data->delete();
             $this->success('Successfully Archived');
@@ -382,7 +382,7 @@ class AdvisorController extends Controller
      */
     public function restore(Request $request){
         try{
-            
+
             $data = $this->getModel()->withTrashed()->find($request->id);
             $data->restore();
             $this->success(' Advisor restored successfully');
@@ -402,9 +402,9 @@ class AdvisorController extends Controller
             AdvisorBillingInfo::where('advisor_id', $data->id)->delete();
             Testimonial::where('advisor_id', $data->id)->forceDelete();
             AdvisorQuestion::where('advisor_id', $data->id)->forceDelete();
-            AdvisorCompliance::where('advisor_id', $data->id)->delete();           
+            AdvisorCompliance::where('advisor_id', $data->id)->delete();
             Interview::where('advisor_id', $data->id)->delete();
-            
+
             $this->saveActivity($request, "Advisor deleted", $data);
             $data->forceDelete();
             $this->success(' Advisor deleted successfully');
@@ -418,7 +418,7 @@ class AdvisorController extends Controller
      * Show Archive  Advisor List
      */
     public function archiveList(Request $request){
-        
+
         if( $request->ajax() ){
             return $this->getDataTable($request, 'archive');
         }
@@ -473,7 +473,7 @@ class AdvisorController extends Controller
      */
     public function changePasswordPage(Request $request){
         $advisor = User::find($request->id);
-        
+
         $params = [
             'title' => "Change Password",
             "form_url" => route('advisor.change_password', ['id' => $request->id]),
@@ -509,7 +509,7 @@ class AdvisorController extends Controller
         $office_managers = User::whereHas("subscription_plan", function($qry){
             $qry->where("office_manager", true);
         })->where("office_manager_id", null)->get();
-        
+
         $params = [
             'title'                 => "Assign Advisor Under Office Manager",
             "form_url"              => route('advisor.assign_office_manager', [$request->id]),
@@ -555,17 +555,17 @@ class AdvisorController extends Controller
         }else{
             $data = $this->getModel()->onlyTrashed();
         }
-        
+
         // Type Filter
         if( $type == "list" ){
-            if( isset($request->type) && $request->type == "filter"){          
+            if( isset($request->type) && $request->type == "filter"){
                 $data = $data->where('advisors.created_at', 'like', $request->type_value.'%');
             }
             if( isset($request->type) && $request->type == "plan"){
                 $data = $data->whereHas('subscription_plan', function($qry) use($request){
                     $qry->where('name', $request->type_value);
                 });
-            }    
+            }
             if( !$request->type ){
                 $data = $data->where('subscribe', $subscribe);
             }
@@ -584,7 +584,7 @@ class AdvisorController extends Controller
         return DataTables::of($data)
             ->addColumn('index', function(){ return ++$this->index; })
             ->addColumn('subscription', function($row){ return $row->subscription_plan->name ?? "N/A"; })
-            ->addColumn('name', function($row){ return ($row->first_name ?? "" . ' '. $row->last_name ?? ""); })
+            ->addColumn('advisor', function($row){ return ($row->first_name. ' '. $row->last_name ); })
             ->addColumn('subscribe_primaty_reason', function($row){ return substr($row->subscribe_primary_reason(), 0, 60); })
             ->addColumn('date', function($row)use($system){ return Carbon::parse($row->created_at)->format($system->date_format); })
             ->addColumn('area_covered', function($row){
@@ -600,12 +600,12 @@ class AdvisorController extends Controller
                 }
                 return  "N/A";
             })
-            ->addColumn('action', function($row) use($type, $subscribe){  
+            ->addColumn('action', function($row) use($type, $subscribe){
                 $li = "";
                 if($type == 'list'){
-                    $li = '<a href="'.route('advisor.view',['id' => $row->id]).'" class="btn btn-sm btn-primary" title="Advisor Profile" target="_blank"> <span class="fa fa-user fa-lg"></span> Advisor Admin</a> '; 
-                    $li .= '<a href="'.route('advisor.view-postcode',['id' => $row->id]).'" class="btn btn-sm btn-info ajax-click-page" title="Advisor Postcode"> <span class="fa fa-eye fa-lg"></span> View Postcode</a> '; 
-                }              
+                    $li = '<a href="'.route('advisor.view',['id' => $row->id]).'" class="btn btn-sm btn-primary" title="Advisor Profile" target="_blank"> <span class="fa fa-user fa-lg"></span> Advisor Admin</a> ';
+                    $li .= '<a href="'.route('advisor.view-postcode',['id' => $row->id]).'" class="btn btn-sm btn-info ajax-click-page" title="Advisor Postcode"> <span class="fa fa-eye fa-lg"></span> View Postcode</a> ';
+                }
                 $li .= '<a href="'.route('advisor.edit',['id' => $row->id]).'" class="btn btn-sm btn-warning" title="Edit" > <span class="fa fa-edit fa-lg"></span> Edit</a> ';
                 $li .= '<a href="'.route('advisor.change_password',['id' => $row->id]).'" class="btn btn-sm btn-dark ajax-click-page" title="Edit" > <span class="fa fa-edit fa-lg"></span>Change Password</a> ';
                 $li .= '<a href="'.route('advisor.assign_office_manager',['id' => $row->id]).'" class="btn btn-sm btn-primary ajax-click-page" title="Assign Under a Office Manager" > <i class="fa fa-clipboard-check"></i>Assign Office Manager</a> ';
@@ -630,10 +630,10 @@ class AdvisorController extends Controller
             })
             ->editColumn('subscribe', function($row)use($subscribe){
                 if( !$subscribe ){
-                    return '<a href="'.route('advisor.subscribe',[$row->id, 1]).'" class="ajax-click btn btn-sm btn-warning" title="Unsubscribed" >Unsubscribed</a> '; 
+                    return '<a href="'.route('advisor.subscribe',[$row->id, 1]).'" class="ajax-click btn btn-sm btn-warning" title="Unsubscribed" >Unsubscribed</a> ';
                 }else{
-                    return '<a href="'.route('advisor.subscribe',[$row->id, 0]).'" class="ajax-click btn btn-sm btn-success" title="Subscribed" >Subscribed</a> '; 
-                }                
+                    return '<a href="'.route('advisor.subscribe',[$row->id, 0]).'" class="ajax-click btn btn-sm btn-success" title="Subscribed" >Subscribed</a> ';
+                }
             })
             ->addcolumn('profession', function($row){ return $row->profession->name ?? ""; })
             ->addcolumn('profile_name', function($row){ return $row->firm_details->profile_name; })
@@ -706,7 +706,7 @@ class AdvisorController extends Controller
         if( $request->ajax() ){
             return $this->getBillingDataTable();
         }
-        
+
         $params = [
             'nav'               => 'advisor',
             'subNav'            => 'advisor.billing_list',
@@ -740,7 +740,7 @@ class AdvisorController extends Controller
             "form_url"  => route('advisor.billing_edit',[$request->id]),
             "data"      => AdvisorBillingInfo::find($request->id),
         ];
-        $this->saveActivity($request, "Edit Advisor Billing Info"); 
+        $this->saveActivity($request, "Edit Advisor Billing Info");
         return view('backEnd.advisor.edit-billing', $params);
     }
 
@@ -752,7 +752,7 @@ class AdvisorController extends Controller
             $data_arr = $request->except(['_token', 'id']);
             AdvisorBillingInfo::where('id', $request->id)->update($data_arr);
             $this->success('Billing information saved successfully');
-            $this->saveActivity($request, "Update Advisor Billing Info"); 
+            $this->saveActivity($request, "Update Advisor Billing Info");
         }catch(Exception $e){
             $this->message = $this->getError($e);
         }
@@ -766,8 +766,8 @@ class AdvisorController extends Controller
         $datas = AdvisorBillingInfo::join('advisors', 'advisors.id', '=', 'advisor_billing_infos.advisor_id')->select('advisor_billing_infos.*', 'advisors.first_name', 'advisors.last_name','advisors.terms_and_condition_agree_date','advisors.subscription_plan_id')->orderBy('id', 'DESC')->get();
         return DataTables::of($datas)
             ->addColumn('index', function(){ return ++$this->index; })
-            ->addColumn('advisor', function($row){ 
-                return (($row->first_name ?? 'N/A'). ' ' .($row->last_name ?? null)); 
+            ->addColumn('advisor', function($row){
+                return (($row->first_name ?? 'N/A'). ' ' .($row->last_name ?? null));
             })
             ->addColumn('post_code', function($row){ return $row->billing_post_code; })
             ->addColumn('address', function($row){ return $row->billing_address_line_one . ' ' . $row->billing_address_line_two; })
@@ -777,8 +777,8 @@ class AdvisorController extends Controller
                 // return $row->subscription_plan->name ?? "N/A";
              })
             ->addColumn('terms_and_condition_agree_date', function($row){ return $row->terms_and_condition_agree_date ?? 'N/A';})
-            ->addColumn('action', function($row){                
-                $li = '<a href="'.route('advisor.billing_view',[$row->id]).'" class="btn btn-sm btn-primary ajax-click-page" title="Advisor Profile" target="_blank"> <span class="fa fa-eye fa-lg"></span> </a> '; 
+            ->addColumn('action', function($row){
+                $li = '<a href="'.route('advisor.billing_view',[$row->id]).'" class="btn btn-sm btn-primary ajax-click-page" title="Advisor Profile" target="_blank"> <span class="fa fa-eye fa-lg"></span> </a> ';
                 $li .= '<a href="'.route('advisor.billing_edit',[$row->id]).'" class="btn btn-sm btn-info ajax-click-page" title="Edit" > <span class="fa fa-edit fa-lg"></span> </a> ';
                 return $li;
             })
@@ -795,7 +795,7 @@ class AdvisorController extends Controller
         if( $request->ajax() ){
             return $this->getPromotionalDataTable();
         }
-        $this->saveActivity($request, "View Advisor Promotional List"); 
+        $this->saveActivity($request, "View Advisor Promotional List");
         $params = [
             'nav'               => 'advisor',
             'subNav'            => 'advisor.promotional_list',
@@ -814,12 +814,12 @@ class AdvisorController extends Controller
      */
     public function advisorPromotionalCreate(Request $request){
         $promotional_advisors_arr = PromotionalAdvisor::select('advisor_id')->get()->toArray();
-        $this->saveActivity($request, "Advisor promotional list add page open"); 
+        $this->saveActivity($request, "Advisor promotional list add page open");
         $params = [
             "title"     => "Add Promotional Advisor",
             "form_url"  => route('advisor.promotional_create'),
             "advisors"  => User::whereNotIn('id', $promotional_advisors_arr)->orderBy('id', 'asc')->get(),
-        ]; 
+        ];
         return view('backEnd.advisor.promotional', $params);
     }
 
@@ -833,8 +833,8 @@ class AdvisorController extends Controller
             "form_url"  => route('advisor.promotional_create'),
             "advisors"  => User::whereNotIn('id', $promotional_advisors_arr)->orderBy('id', 'asc')->get(),
             "data"      => PromotionalAdvisor::where('id', $request->id)->first(),
-        ]; 
-        $this->saveActivity($request, "Advisor promotional list Edit page open"); 
+        ];
+        $this->saveActivity($request, "Advisor promotional list Edit page open");
         return view('backEnd.advisor.promotional', $params);
     }
 
@@ -856,9 +856,9 @@ class AdvisorController extends Controller
             $data_arr = $request->except(['_token', 'id']);
             if($request->id == 0){
                 PromotionalAdvisor::insert($data_arr);
-                $this->saveActivity($request, "Add Advisor into promotional list"); 
+                $this->saveActivity($request, "Add Advisor into promotional list");
             }else{
-                $this->saveActivity($request, "Update Advisor into promotional list"); 
+                $this->saveActivity($request, "Update Advisor into promotional list");
                 PromotionalAdvisor::where('id', $request->id)->update($data_arr);
             }
             $this->success('Promotional advisor information saved successfully');
@@ -874,7 +874,7 @@ class AdvisorController extends Controller
     public function advisorPromotionalDelete(Request $request){
         try{
             PromotionalAdvisor::where('id', $request->id)->delete();
-            $this->saveActivity($request, "Delete Advisor from promotional list"); 
+            $this->saveActivity($request, "Delete Advisor from promotional list");
             $this->success('Promotional advisor information deleted successfully');
         }catch(Exception $e){
             $this->message = $this->getError($e);
@@ -898,7 +898,7 @@ class AdvisorController extends Controller
     }
 
     /**
-     * Promotional Advisor List Datatable 
+     * Promotional Advisor List Datatable
      */
     protected function getPromotionalDataTable(){
         $datas = PromotionalAdvisor::orderBy('position', 'ASC')->get();
@@ -906,12 +906,12 @@ class AdvisorController extends Controller
             ->addColumn('index', function(){ return ++$this->index; })
             ->addColumn('advisor', function($row){ return ($row->advisor->first_name . ' ' .$row->advisor->last_name); })
             ->editColumn('publication_status', function($row){ return $this->getStatus($row->publication_status); })
-            ->addColumn('action', function($row){                
-                $li = '<a href="'.route('advisor.promotional_edit',[$row->id]).'" class="btn btn-sm btn-info ajax-click-page" title="Edit" > <span class="fa fa-edit fa-lg"></span> </a> ';  
-                $li .= '<a href="'.route('advisor.promotional_delete',[$row->id]).'" class="btn btn-sm btn-danger ajax-click" title="Delete" > <span class="fa fa-trash fa-lg"></span> </a> ';  
+            ->addColumn('action', function($row){
+                $li = '<a href="'.route('advisor.promotional_edit',[$row->id]).'" class="btn btn-sm btn-info ajax-click-page" title="Edit" > <span class="fa fa-edit fa-lg"></span> </a> ';
+                $li .= '<a href="'.route('advisor.promotional_delete',[$row->id]).'" class="btn btn-sm btn-danger ajax-click" title="Delete" > <span class="fa fa-trash fa-lg"></span> </a> ';
                 return $li;
             })
         ->rawColumns(['publication_status', 'action'])->make(true);
     }
-    
+
 }

@@ -191,7 +191,7 @@ class AdvisorController extends Controller
             "email"             => ['required','email', $request->id == 0 ? 'unique:advisors' : null],
             "password"          => [ $request->id == 0 ? 'required' : 'nullable','string','min:4', 'max:100'],
             "phone"             => ['required','string','min:8', 'max:16'],
-            "telephone"         => ['nullable','string','min:8', 'max:16'],
+            // "telephone"         => ['nullable','string','min:8', 'max:16'],
             "personal_fca_number"=>['nullable','string','min:2', 'max:100'],
             "address_line_one"  => ['required','string','min:2', 'max:191'],
             "address_line_two"  => ['nullable','string','min:1', 'max:191'],
@@ -200,7 +200,7 @@ class AdvisorController extends Controller
             "country"           => ['required','string','min:2', 'max:100'],
             "subscription_plan_id"=> ['required','numeric','min:1'],
             "fund_size_id"      => ['required','numeric','min:1'],
-            "primary_region_id" => ['required','numeric','min:1'],
+            // "primary_region_id" => ['required','numeric','min:1'],
             //"status"            => ["required", "string", "min:4", "max:20"],
             "advisor_type_id.*"   => ["required", "numeric"],
             "service_offered_id.*" => ["required", "numeric"],
@@ -240,10 +240,10 @@ class AdvisorController extends Controller
             $data->last_name = $request->last_name;
             $data->email = $request->email;
             $data->phone = $request->phone;
-            $data->telephone = $request->telephone;
-            $data->view_telephone_no = $request->view_telephone_no ?? 0;
+            // $data->telephone = $request->telephone;
+            // $data->view_telephone_no = $request->view_telephone_no ?? 0;
             $data->personal_fca_number = $request->personal_fca_number;
-            $data->fca_status_date = $request->fca_status_date;
+            // $data->fca_status_date = $request->fca_status_date;
             $data->password = !empty($request->password) ? bcrypt($request->password) : $data->password;
             $data->address_line_one = $request->address_line_one;
             $data->address_line_two = $request->address_line_two;
@@ -252,15 +252,16 @@ class AdvisorController extends Controller
             $data->country = $request->country;
             $data->subscription_plan_id = $request->subscription_plan_id;
             $data->fund_size_id = $request->fund_size_id;
-            $data->primary_region_id = $request->primary_region_id;
+            // $data->primary_region_id = $request->primary_region_id;
             $data->subscribe_primary_region_id = $request->subscribe_primary_region_id;
             //$data->status = $request->status;
             $data->is_live = $request->is_live;
-            $data->terms_and_condition_agree_date = $request->terms_and_condition_agree_date;
+            // $data->terms_and_condition_agree_date = $request->terms_and_condition_agree_date;
             //$data->no_of_subscription_accounts = $request->no_of_subscription_accounts;
             $data->advisor_type_id = $request->advisor_type_id;
             $data->service_offered_id = $request->service_offered_id;
             $data->location_postcode_id = $request->location_postcode_id;
+            $data->profile_brief = $request->profile_brief;
             //$data->subscribe_location_postcode_id = $request->subscribe_location_postcode_id;
             $data->latitude = $request->latitude;
             $data->longitude = $request->longitude;

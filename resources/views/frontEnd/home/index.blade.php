@@ -35,10 +35,14 @@
         .blog-card{height: 420px;}
         @media only screen and (max-width: 600px){
             .ask-now, #question-submit{width: 100%; font-size: 21px; padding: 10px;}
+            .question-box{width: 100%;margin-left: 20px}
+            .active-advisor{margin-right:-20px;margin-top:10px}
+            .question-right-box{margin-top:-100%;}
         }
         @media only screen and (max-width: 767px){
-            .question-right-box, .question-bottom-box{border-radius: 0px;}
-            .question-section .heading_text, .heading_text h1, .heading_text h2, .heading_text h3{text-align: center; line-height:45px;}  
+
+            .question-right-box, .question-bottom-box{border-radius: 0px; margin-top:-100em;}
+            .question-section .heading_text, .heading_text h1, .heading_text h2, .heading_text h3{text-align: center; line-height:45px;}
             .question-section{background-image:unset !important; }
             .blog-card{height: 350px;}
         }
@@ -74,7 +78,7 @@
                                                 <label class="switch">
                                                     <input type="checkbox" id="all_advisor">
                                                     <span class="slider round" style="background-color:#28a745"></span>
-                                                    
+
                                                 </label>
                                             </div>
                                             <div class="col-6 p-0 font-12">Mortgage only</div>
@@ -95,7 +99,7 @@
                                     </div>
                                 @endif
                                 <form class="container question" action="{{ route('quick_question') }}" method="post">
-                                    @csrf 
+                                    @csrf
                                     <div class="row mb-2 ask-now-progress">
                                         <div class="col-12 p-0">
                                             <span class="progress-text" style="font-weight: bold;">0%</span>
@@ -104,9 +108,9 @@
                                             </div>
                                             <div class="text-right font-12" style="font-weight: bold;">
                                                 Find your ideal financial advisor
-                                            </div> 
+                                            </div>
                                         </div>
-                                    </div>                                  
+                                    </div>
                                     <div class="row question-part-1">
                                         <div class="col-12 p-0">
                                             <select name="service_offer_id" id="service_offer_id" required class="form-control" >
@@ -138,7 +142,7 @@
                                         <div class="col-12 col-md-6 mt-3 mt-md-0">
                                             <input name="last_name" value="{{ old('last_name') }}" class="form-control" placeholder="Last name" required>
                                         </div>
-                                        
+
                                         <!-- Email -->
                                         <div class="col-12 mt-3">
                                             <div class="input-group">
@@ -209,12 +213,12 @@
                                         <input type="hidden" id="all_mortgage_advisor" value="{{ $total_mortgage_advisor }}">
                                         <span id="active-advisor">{{ $active_advisor }}</span> active advisors
                                     </div>
-                                </div>                              
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-4 col-lg-3 ml-0 question-right-box mt-3 mt-md-5 mb-3 mt-md-5" style="margin-bottom: 8rem !important; margin-top: 4rem !important;">
+                <div class="col-sm-12 col-md-4 col-lg-3 ml-0 question-right-box mt-3 mt-md-5 mb-3 mt-md-5" style="margin-bottom: 8rem !important;">
                     <ol>
                         <li><b>Type Your Question</b></li>
                         <li><b>Enter Your Contact Details</b> <br/> A financial advisor usually responds in minutes.</li>
@@ -229,13 +233,13 @@
                         <i class="fas fa-lock text-success"></i> <strong>GDPR Compliant.</strong>
                         Please view our <a href="{{ route('privacy_policy') }}" target="_blank">Privacy Policy</a> <br>
                         By submitting your details, you agree to be connected with a Financial Advisor.
-                        
+
                     </div>
                 </div> -->
             </div>
         </div>
     </section>
-    
+
     <!-- Ekomi -->
     <div class="container-lg banner" style="margin-top:-60px !important">
         <div class="row">
@@ -265,7 +269,7 @@
                                 <div class="card-header bg-theme" >
                                     <div class="row">
                                         <div class="col-sm-7 col-12">
-                                            {{-- <h3 class="text-white">                                                
+                                            {{-- <h3 class="text-white">
                                                 {{-- <button class="btn btn-link text-white font-24 p-0" data-toggle="collapse" data-target="#collapse{{$offer->id}}" aria-expanded="true" aria-controls="collapse{{$offer->id}}">{{ $offer->name }}</button> --}}
                                                 {{-- {{ $offer->name }}
                                             </h3> --}}
@@ -280,7 +284,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            
+
                                 <div id="collapse{{$offer->id}}" class="collapse" data-parent="#accordion">
                                     <div class="card-body row">
                                         <div class="col-12 col-md-12">
@@ -294,15 +298,15 @@
                                                     </a>
                                                     <p class="font-weight-bold font-14">
                                                         {{ $offer->description }}
-                                                    </p>                                                    
+                                                    </p>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                         @foreach($offer->ans_questions as $question)
                                             <div class="col-12 col-md-12">
                                                 <div class="bg-light p-2 mt-2">
                                                     <a href="{{ route('service_view_question',['question_id' => $question->id, 'service' => Str::slug($offer->name)]) }}" >{{ $question->question}}</a> <small class="float-right">{{ Carbon\Carbon::parse($question->created_at)->format($system->date_format) }}</small>
-                                                </div>                                                
+                                                </div>
                                             </div>
                                             @if($loop->iteration >= 25)
                                                 @break
@@ -357,8 +361,8 @@
                                     @endif
                                     {{-- <a href="{{ route('advisor_profile',['profession' =>Str::slug($advisor->profession->name ?? 'N-A'), 'location' => str::slug($advisor->town ?? "N-A"), 'name_id' => $advisor->id .'-'.($advisor->first_name . '-' . $advisor->last_name)]) }}" target="_blank" class="btn btn-success mt-4 no-radius" >Profile</a>                                     --}}
                                     <a href="{{ route('contact_advisor',[$advisor->id]) }}" class="btn btn-md mt-4 no-radius" style="background-color:#2ECC71;color:#FDFEFE;font-size:15px;">Email {{ $advisor->first_name }}</a>
-                                </div>                            
-                            @endforeach                                              
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 @endif
@@ -377,7 +381,7 @@
             </div>
             <div class="row">
                 <div class="col-12 row">
-                    <div class="col-6 col-md-3 text-center right-border">                        
+                    <div class="col-6 col-md-3 text-center right-border">
                         <h3 class="p-0 m-0 number_counter font-50" count="{{ $total_advisor ?? 0 }}" >0</h3>
                         Active advisors
                     </div>
@@ -481,11 +485,11 @@
             </div>
             <div class="row mt-3">
                 @foreach($blogs as $blog)
-                <?php 
+                <?php
                     $admin = $blog->createdBy;
                 ?>
                 <div class="col-sm-6 col-md-4 col-lg-3 mt-2">
-                    <div class="card blog-card">                        
+                    <div class="card blog-card">
                         <div class="row">
                             <div class="col-12">
                                 <img src="{{ asset($blog->image ?? 'image/not-found.png') }}" class="card-img-top" alt="Image" style="height:180px;">
@@ -599,7 +603,7 @@
         });
 
         $(document).ready(function(){
-            $("#advisor-owl-carousel .owl-carousel").owlCarousel({      
+            $("#advisor-owl-carousel .owl-carousel").owlCarousel({
                 loop:true,
                 nav: true,
                 navText:['<i class="fas fa-arrow-circle-left text-theme fa-2x"></i>', '<i class="fas fa-arrow-circle-right text-theme fa-2x"></i>'],

@@ -24,10 +24,10 @@
                             <select class="form-control select2" name="profession_id" required >
                                 <option value="">Select Advisor Profession</option>
                                 @foreach($professions as $item)
-                                    <option value="{{ $item->id }}" {{ old('profession_id') && old('profession_id') == $item->id ? 'selected' : (isset($data->profession_id) && $data->profession_id == $item->id ? "selected" : Null) }}> {{ $item->name }} </option>     
-                                @endforeach                           
+                                    <option value="{{ $item->id }}" {{ old('profession_id') && old('profession_id') == $item->id ? 'selected' : (isset($data->profession_id) && $data->profession_id == $item->id ? "selected" : Null) }}> {{ $item->name }} </option>
+                                @endforeach
                             </select>
-                            @if($errors->has('profession_id'))                                
+                            @if($errors->has('profession_id'))
                                 <span class="text-danger font-10" role="alert">
                                     <strong>{{ $errors->first('profession_id') }}</strong>
                                 </span>
@@ -60,7 +60,7 @@
                         </div>
                     </div>
 
-                    
+
 
                     <!-- Email -->
                     <div class="col-12 col-sm-6 col-md-4">
@@ -94,7 +94,7 @@
                     <!-- Phone Number -->
                     <div class="col-12 col-sm-6 col-md-4">
                         <div class="form-group">
-                            <label>Phone Number <span class="text-danger">*</span> </label>                            
+                            <label>Phone Number <span class="text-danger">*</span> </label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
                                 <input type="text" maxlength="11" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }} verify" data-verify_type="phone" name="phone" value="{{ old("phone") ?? ($data->phone ?? "")}}"  required >
@@ -148,7 +148,7 @@
                             @endif
                         </div>
                     </div>
-                    
+
                     <!--  FCA Status Effective Date -->
                     <div class="col-12 col-sm-6 col-md-4">
                         <div class="form-group">
@@ -264,7 +264,7 @@
                                     <option value="{{$item->id}}" {{ old('subscription_plan_id') == $item->id ? "selected" : ( isset($data->subscription_plan_id) && $data->subscription_plan_id == $item->id ? "selected" : Null ) }} >{{ $item->name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('subscription_plan_id'))                                
+                            @if($errors->has('subscription_plan_id'))
                                 <span class="text-danger font-10" role="alert">
                                     <strong>{{ $errors->first('subscription_plan_id') }}</strong>
                                 </span>
@@ -282,7 +282,7 @@
                                     <option value="{{ $item->id }} " {{ old('fund_size_id') == $item->id ? "selected" : ( isset($data->fund_size_id) && $data->fund_size_id == $item->id ? "selected" : Null ) }} >{{ $item->name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('fund_size_id'))                                
+                            @if($errors->has('fund_size_id'))
                                 <span class="text-danger font-10" role="alert">
                                     <strong>{{ $errors->first('fund_size_id') }}</strong>
                                 </span>
@@ -300,7 +300,7 @@
                                     <option value="{{ $reason->id }}" {{ old('primary_region_id') == $reason->id ? "selected" : ( isset($data->primary_region_id) && $data->primary_region_id == $reason->id ? "selected" : Null ) }} >{{ $reason->name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('primary_region_id'))                                
+                            @if($errors->has('primary_region_id'))
                                 <span class="text-danger font-10" role="alert">
                                     <strong>{{ $errors->first('primary_region_id') }}</strong>
                                 </span>
@@ -316,10 +316,10 @@
                                 <option value="">Select  Primary Subscription Locations</option>
                                 @foreach ($subscribe_reasons as $reason)
                                     <option value="{{ $reason->id }}" {{ old('subscribe_primary_region_id') && is_array( old('subscribe_primary_region_id') ) && in_array($reason->id, old('subscribe_primary_region_id')) ? 'selected' : ( isset($data->subscribe_primary_region_id) && is_array($data->subscribe_primary_region_id) && in_array($reason->id, $data->subscribe_primary_region_id) ? "selected" : Null ) }} >{{ $reason->name }}</option>
-                                    
+
                                 @endforeach
                             </select>
-                            @if($errors->has('subscribe_primary_region_id'))                                
+                            @if($errors->has('subscribe_primary_region_id'))
                                 <span class="text-danger font-10" role="alert">
                                     <strong>{{ $errors->first('subscribe_primary_region_id') }}</strong>
                                 </span>
@@ -336,14 +336,14 @@
                                 <option value="active" {{ old('status') == 'active' ? "selected" : ( isset($data->status) && $data->status == 'active' ? "selected" : Null ) }}>Yes</option>
                                 <option value="inactive" {{ old('status') == 'inactive' ? "selected" : ( isset($data->status) && $data->status == 'inactive' ? "selected" : Null ) }}>No</option>
                             </select>
-                            @if($errors->has('status'))                                
+                            @if($errors->has('status'))
                                 <span class="text-danger font-10" role="alert">
                                     <strong>{{ $errors->first('status') }}</strong>
                                 </span>
                             @endif
                         </div>
                     </div>
-                    
+
                     <!-- Date Agree of Trems & condition -->
                     <div class="col-12 col-sm-6 col-md-4">
                         <div class="form-group">
@@ -369,7 +369,7 @@
                                 <option value="1" {{ old('is_live') == '1' ? "selected" : ( isset($data->is_live) && $data->is_live == '1' ? "selected" : Null ) }}>Active</option>
                                 <option value="0" {{ old('is_live') == '0' ? "selected" : ( isset($data->is_live) && $data->is_live == '0' ? "selected" : Null ) }}>Pause</option>
                             </select>
-                            @if($errors->has('is_live'))                                
+                            @if($errors->has('is_live'))
                                 <span class="text-danger font-10" role="alert">
                                     <strong>{{ $errors->first('is_live') }}</strong>
                                 </span>
@@ -387,14 +387,14 @@
                                     <option value="{{ $type->id }}" {{ old('service_offered_id') && is_array( old('service_offered_id') ) && in_array($type->id, old('service_offered_id')) ? 'selected' : ( isset($data->service_offered_id) && is_array($data->service_offered_id) && in_array($type->id, $data->service_offered_id) ? "selected" : Null ) }} >{{ $type->name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('service_offered_id'))                                
+                            @if($errors->has('service_offered_id'))
                                 <span class="text-danger font-10" role="alert">
                                     <strong>{{ $errors->first('service_offered_id') }}</strong>
                                 </span>
                             @endif
                         </div>
                     </div>
-                    
+
 
                     <!-- Type of Advisor -->
                     <div class="col-12  col-md-6">
@@ -406,24 +406,24 @@
                                     {{ $type->name }}
                                 </label><br>
                             @endforeach
-                            @if($errors->has('advisor_type_id'))                                
+                            @if($errors->has('advisor_type_id'))
                                 <span class="text-danger font-10" role="alert">
                                     <strong>{{ $errors->first('advisor_type_id') }}</strong>
                                 </span>
                             @endif
-                            
+
                         </div>
                     </div>
-                    
+
                     <div class="col-12">
                         <hr/>
                         <h3 class="font-weight-bold">Postcode Areas Covered</h3>
                         @foreach ($reasons as $reason)
                             <div class="col-12 mt-10 row reason">
                                 <div class="col-12">
-                                    
+
                                     <h4 class="p-0 m-0 mt-2">
-                                        <label class="font-weight-bold font-16">                                    
+                                        <label class="font-weight-bold font-16">
                                             <input type="checkbox" class="select-all_reason"> {{$reason->name }}
                                         </label>
                                     </h4>
@@ -435,10 +435,10 @@
                                         <label> <input type="checkbox" value="{{ $location->id }}" name="location_postcode_id[]" {{ isset($data->location_postcode_id) && is_array($data->location_postcode_id) && in_array($location->id, $data->location_postcode_id) ? "checked" : Null }} > {{ $location->full_name }} </label>
                                     </div>
                                 @endforeach
-                            </div>                       
+                            </div>
                         @endforeach
-                        @if($errors->has('location_postcode_id')) 
-                            <div class="col-12 ">                              
+                        @if($errors->has('location_postcode_id'))
+                            <div class="col-12 ">
                                 <span class="text-danger font-10" role="alert">
                                     <strong>{{ $errors->first('location_postcode_id') }}</strong>
                                 </span>
@@ -453,7 +453,7 @@
                             <div class="col-12 mt-10 row reason">
                                 <div class="col-12">
                                     <h4 class="p-0 m-0 mt-2">
-                                        <label class="font-weight-bold font-16">                                    
+                                        <label class="font-weight-bold font-16">
                                             <input type="checkbox" class="select-all_reason"> {{$reason->name }}
                                         </label>
                                     </h4>
@@ -465,10 +465,10 @@
                                         <label> <input type="checkbox" value="{{ $location->id }}" name="subscribe_location_postcode_id[]" {{ isset($data->subscribe_location_postcode_id) && is_array($data->subscribe_location_postcode_id) && in_array($location->id, $data->subscribe_location_postcode_id) ? "checked" : Null }} > {{ $location->full_name }} </label>
                                     </div>
                                 @endforeach
-                            </div>                       
+                            </div>
                         @endforeach
-                        @if($errors->has('subscribe_location_postcode_id')) 
-                            <div class="col-12 ">                              
+                        @if($errors->has('subscribe_location_postcode_id'))
+                            <div class="col-12 ">
                                 <span class="text-danger font-10" role="alert">
                                     <strong>{{ $errors->first('subscribe_location_postcode_id') }}</strong>
                                 </span>
@@ -480,7 +480,7 @@
                         <h3>Firm Details</h3>
                         <hr/>
                     </div>
-                     
+
                     <!-- Firm Profile Name -->
                     <div class="col-4">
                         <div class="form-group">
@@ -494,7 +494,7 @@
                         </div>
                     </div>
 
-                    
+
 
                     <!-- Firm FCA Ref. Number -->
                     <div class="col-4">
@@ -535,9 +535,9 @@
                         </div>
                     </div>
                     <!-- Firm profile_details -->
-                    <div class="col-4 d-none"> 
+                    <div class="col-4 d-none">
                         <div class="form-group">
-                            <label>Firm Details </label>                            
+                            <label>Firm Details </label>
                             <textarea class="form-control{{ $errors->has('profile_details') ? ' is-invalid' : '' }}" name="profile_details" >{{ old("profile_details") ?? ($data->firm_details->profile_details ?? "")}}</textarea>
                             @if ($errors->has('profile_details'))
                                 <span class="text-danger" role="alert">
@@ -547,7 +547,7 @@
                         </div>
                     </div>
 
-                                 
+
                     <div class="col-12 mt-5">
                         <h3>Advisor Billing Info</h3>
                         <hr/>
@@ -616,7 +616,7 @@
                             @endif
                         </div>
                     </div>
-                    
+
 
                     <!--  Town -->
                     <div class="col-4">
@@ -707,32 +707,32 @@
     });
 
     // Town
-    $('#town').keyup(function (e) { 
+    $('#town').keyup(function (e) {
         $("#billing_town").val($(this).val());
     });
     // Country
-    $('#country').keyup(function (e) { 
+    $('#country').keyup(function (e) {
         $("#billing_country").val($(this).val());
     });
     // Postcode
-    $('#post_code').keyup(function (e) { 
+    $('#post_code').keyup(function (e) {
         $("#billing_post_code").val($(this).val());
     });
     // FCA Number
-    $('#personal_fca_number').keyup(function (e) { 
+    $('#personal_fca_number').keyup(function (e) {
         $("#billing_company_fca_number").val($(this).val());
     });
     // Name
-    $('#first_name, #last_name').keyup(function (e) { 
+    $('#first_name, #last_name').keyup(function (e) {
         $("#billing_company_name").val( $("#first_name").val() + " " + $("#last_name").val());
         $("#contact_name").val( $("#first_name").val() + " " + $("#last_name").val());
     });
-    // Address One 
-    $('#address_line_one').keyup(function (e) { 
+    // Address One
+    $('#address_line_one').keyup(function (e) {
         $("#billing_address_line_one").val($(this).val());
     });
-    // Address Two 
-    $('#address_line_two').keyup(function (e) { 
+    // Address Two
+    $('#address_line_two').keyup(function (e) {
         $("#billing_address_line_two").val($(this).val());
     });
 

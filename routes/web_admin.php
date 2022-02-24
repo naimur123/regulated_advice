@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
  * Admin Login Area
  *********************/
 Route::prefix('admin')->name('admin.')->group(function(){
-    
+
     Route::get('/','BackEnd\Auth\LoginController@showLoginForm');
     Route::get('/login','BackEnd\Auth\LoginController@showLoginForm')->name('login');
     Route::post('/login','BackEnd\Auth\LoginController@login');
@@ -53,7 +53,7 @@ Route::middleware(["auth:admin"])->group(function(){
     });
 
     Route::prefix('dashboard')->group(function(){
-        
+
         Route::get('visitor', 'BackEnd\VisitorController@index')->name('visitor');
         /***********************
          * Advisor
@@ -103,6 +103,10 @@ Route::middleware(["auth:admin"])->group(function(){
             Route::post("create", "BackEnd\OfficeManagerController@store");
             Route::get("{id}/edit", "BackEnd\OfficeManagerController@edit")->name("edit");
             Route::get("{id}/view-billing", "BackEnd\OfficeManagerController@viewBilingInfo")->name("view_billing");
+            Route::get('/{id}/archive','BackEnd\OfficeManagerController@archive')->name('archive');
+            Route::get('/deleted-list','BackEnd\OfficeManagerController@archivelist')->name('archived_list');
+            Route::get('/{id}/restore','BackEnd\OfficeManagerController@restore')->name('restore');
+            Route::get('/{id}/delete','BackEnd\OfficeManagerController@delete')->name('delete');
         });
 
         /**************
@@ -164,7 +168,7 @@ Route::middleware(["auth:admin"])->group(function(){
             Route::get('/list','BackEnd\InterviewController@index')->name('list');
             Route::get('/create','BackEnd\InterviewController@create')->name('create');
             Route::post('/create','BackEnd\InterviewController@store');
-            
+
             Route::get('/{id}/view','BackEnd\InterviewController@view')->name('view');
             Route::get('/{id}/edit','BackEnd\InterviewController@edit')->name('edit');
             Route::get('/{id}/delete','BackEnd\InterviewController@delete')->name('delete');
@@ -187,7 +191,7 @@ Route::middleware(["auth:admin"])->group(function(){
             Route::get('/{id}/edit','BackEnd\AdvisorTypeController@edit')->name('edit');
             Route::get('/{id}/archive','BackEnd\AdvisorTypeController@archive')->name('archive');
         });
-        
+
         /**************
          * Author List
          *************/
@@ -212,7 +216,7 @@ Route::middleware(["auth:admin"])->group(function(){
             Route::get('/{id}/edit','BackEnd\ProfessionController@edit')->name('edit');
             Route::get('/{id}/archive','BackEnd\ProfessionController@archive')->name('archive');
         });
-        
+
 
         /**************
          * Firm Size
@@ -312,7 +316,7 @@ Route::middleware(["auth:admin"])->group(function(){
             Route::get('/{id}/edit','BackEnd\SubscriptionController@edit')->name('edit');
             Route::get('/{id}/archive','BackEnd\SubscriptionController@archive')->name('archive');
         });
-        
+
 
         /**************
          * Testimonial
@@ -381,7 +385,7 @@ Route::middleware(["auth:admin"])->group(function(){
             Route::get('/list','BackEnd\EnquiresController@index')->name('list');
             Route::get('/{id}/view','BackEnd\EnquiresController@view')->name('view');
             Route::get('/{id}/delete','BackEnd\EnquiresController@delete')->name('delete');
-            
+
         });
 
         /**
@@ -462,7 +466,7 @@ Route::middleware(["auth:admin"])->group(function(){
         Route::prefix('email')->name('email.')->group(function(){
             Route::get('/send','BackEnd\EmailController@sendMailPage')->name('send');
             Route::post('/send','BackEnd\EmailController@sendMail');
-          
+
             Route::get('/configure','BackEnd\EmailController@configurePageShow')->name('configuration');
             Route::post('/configure','BackEnd\EmailController@saveConfigure');
 
@@ -471,10 +475,10 @@ Route::middleware(["auth:admin"])->group(function(){
             Route::post('/template/create','BackEnd\EmailController@templateSave');
             Route::get('/template/{id}/edit','BackEnd\EmailController@templateEdit')->name("template.edit");
             Route::get('/template/{id}/delete','BackEnd\EmailController@templateDelete')->name("template.delete");
-            
-            
+
+
         });
-        
+
 
         /**
          * User Permission & Group Access

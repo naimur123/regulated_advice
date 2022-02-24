@@ -49,7 +49,7 @@
                         <a class="mobile-menu" id="mobile-collapse" href="#!">
                             <i class="feather icon-menu"></i>
                         </a>
-                        <a href="{{route('admin.dashboard')}}">                            
+                        <a href="{{route('admin.dashboard')}}">
                             {{ $system->application_name ?? str_replace('_',' ', env('APP_NAME')) }}
                         </a>
                         <a class="mobile-options">
@@ -58,11 +58,11 @@
                     </div>
 
                     <div class="navbar-container container-fluid">
-                        
-                        <ul class="nav-right"> 
+
+                        <ul class="nav-right">
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
-                                    <div class="dropdown-toggle" data-toggle="dropdown">                                        
+                                    <div class="dropdown-toggle" data-toggle="dropdown">
                                         <img src="{{ file_exists(Auth::guard('admin')->user()->image)? asset(Auth::guard('admin')->user()->image):asset('image/dummy_user.jpg') }}" class="img-radius" alt="Image">
                                         <span>{{Auth::guard('admin')->user()->name}}</span>
                                         <i class="feather icon-chevron-down"></i>
@@ -70,7 +70,7 @@
                                     <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                         <li>
                                             <a href="{{ route('admin.edit',['id' => Auth::guard('admin')->user()->id])}}" class="ajax-click-page" ><i class="feather icon-user"></i> Profile</a>
-                                        </li>                                        
+                                        </li>
                                         <li>
                                             <a href="{{ route('admin.logout') }} "><i class="feather icon-log-out"></i> Logout</a>
                                         </li>
@@ -83,7 +83,7 @@
                 </div>
             </nav>
             <!-- Top Navigation End -->
-            
+
             <!-- Left Sidebar start -->
             <div class="pcoded-main-container">
                 <div class="pcoded-wrapper">
@@ -104,7 +104,7 @@
                                         <span class="pcoded-mtext">Activity Log</span>
                                     </a>
                                 </li>
-                                
+
 
                                 <?php
                                     $accesses = ['advisor_list', 'advisor_create', 'advisor_update', 'advisor_billing', "advisor_update",'advisor_delete','advisor_deleted_list'];
@@ -126,7 +126,7 @@
                                                 <li class="{{ isset($subNav) && $subNav == "advisor.list" ? 'active-subMenu' : 'none' }}" >
                                                     <a href="{{ route('advisor.list')}}"><i class="fas fa-align-justify"></i> View Advisors</a>
                                                 </li>
-                                            @endif 
+                                            @endif
                                             @if(App\Http\Controllers\BackEnd\AccessController::checkAccess(['advisor_billing', 'advisor_update']))
                                                 <li class="{{ isset($subNav) && $subNav == "advisor.billing_list" ? 'active-subMenu' : 'none' }}" >
                                                     <a href="{{ route('advisor.billing_list')}}"><i class="far fa-address-card"></i> Advisor Billing</a>
@@ -136,12 +136,12 @@
                                                 <li class="{{ isset($subNav) && $subNav == "advisor.promotional_list" ? 'active-subMenu' : 'none' }}" >
                                                     <a href="{{ route('advisor.promotional_list')}}"><i class="far fa-address-card"></i> Promotional List</a>
                                                 </li>
-                                            @endif 
+                                            @endif
                                             @if(App\Http\Controllers\BackEnd\AccessController::checkAccess(['advisor_deleted_list']))
                                                 <li class="{{ isset($subNav) && $subNav == "advisor.archived_list" ? 'active-subMenu' : 'none' }}" >
                                                     <a href="{{ route('advisor.archived_list')}}"><i class="fas fa-trash-restore-alt"></i> Deleted Advisors</a>
                                                 </li>
-                                            @endif                      
+                                            @endif
                                         </ul>
                                     </li>
                                 @endif
@@ -159,10 +159,13 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "create" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('office_manager.create')}}"><i class="fas fa-plus-square"></i> Add Office Manager </a>
-                                            </li>                              
+                                            </li>
                                             <li class="{{ isset($subNav) && $subNav == "list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('office_manager.list')}}"><i class="fas fa-list-alt"></i> All Office Manager</a>
-                                            </li> 
+                                            </li>
+                                            <li class="{{ isset($subNav) && $subNav == "list" ? 'active-subMenu' : 'none' }}" >
+                                                <a href="{{ route('office_manager.archived_list')}}"><i class="fas fa-list-alt"></i> Deleted Office Managers</a>
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
@@ -181,13 +184,13 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "lead.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('lead.list')}}"><i class="fas fa-list-alt"></i> All Leads</a>
-                                            </li> 
+                                            </li>
                                             <li class="{{ isset($subNav) && $subNav == "lead.search_locally" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('lead.search_locally')}}"><i class="fas fa-search-location"></i> Search Local </a>
                                             </li>
                                             <li class="{{ isset($subNav) && $subNav == "lead.match_me" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('lead.match_me')}}"><i class="far fa-handshake"></i> Match Me </a>
-                                            </li>                                     
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
@@ -205,13 +208,13 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "auction.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('auction.list')}}"><i class="fas fa-list-alt"></i> All Auctions</a>
-                                            </li> 
+                                            </li>
                                             <li class="{{ isset($subNav) && $subNav == "auction.search_locally" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('auction.search_locally')}}"><i class="fas fa-search-location"></i> Search Local </a>
                                             </li>
                                             <li class="{{ isset($subNav) && $subNav == "auction.match_me" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('auction.match_me')}}"><i class="far fa-handshake"></i> Match Me </a>
-                                            </li>                                     
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
@@ -230,7 +233,7 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "match_rating.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('match_rating.list')}}"><i class="fas fa-list-alt"></i> Match Ratings List</a>
-                                            </li>                                      
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
@@ -239,7 +242,7 @@
                                 <?php
                                     $accesses = ['advisorQuestion_list', 'advisorQuestion_create', 'advisorQuestion_update', 'advisorQuestion_delete'];
                                 ?>
-                                @if(App\Http\Controllers\BackEnd\AccessController::checkAccess($accesses)) 
+                                @if(App\Http\Controllers\BackEnd\AccessController::checkAccess($accesses))
                                     <li class="pcoded-hasmenu {{ isset($nav) && $nav == 'advisorQuestion' ? 'pcoded-trigger active-menu' : null }}">
                                         <a href="javascript:void(0)">
                                             <span class="pcoded-micon"><i class="far fa-question-circle"></i></span>
@@ -248,7 +251,7 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "advisorQuestion.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('advisorQuestion.list')}}"><i class="fas fa-list-alt"></i> Advisor Questions List </a>
-                                            </li>                                     
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
@@ -267,12 +270,12 @@
                                             @if(App\Http\Controllers\BackEnd\AccessController::checkAccess($accesses))
                                                 <li class="{{ isset($subNav) && $subNav == "interview_question.list" ? 'active-subMenu' : 'none' }}" >
                                                     <a href="{{ route('interview_question.list')}}"><i class="fas fa-list-alt"></i> Questions List </a>
-                                                </li>     
-                                            @endif    
+                                                </li>
+                                            @endif
                                             @if(App\Http\Controllers\BackEnd\AccessController::checkAccess('interview_question_answer_list'))
                                                 <li class="{{ isset($subNav) && $subNav == "interview_question.answer_list" ? 'active-subMenu' : 'none' }}" >
                                                     <a href="{{ route('interview_question.answer_list')}}"><i class="fas fa-list-alt"></i> Answers List </a>
-                                                </li> 
+                                                </li>
                                             @endif
                                         </ul>
                                     </li>
@@ -291,7 +294,7 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "advisorType.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('advisorType.list')}}"><i class="fas fa-list-alt"></i> Advisor Type List</a>
-                                            </li>                             
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
@@ -309,11 +312,11 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "profession.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('profession.list')}}"><i class="fas fa-list-alt"></i> Profession List </a>
-                                            </li>                                     
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
-                                
+
                                 <?php
                                     $accesses = ['firmSize_list', 'firmSize_create', 'firmSize_update', 'firmSize_delete'];
                                 ?>
@@ -345,7 +348,7 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "fundSize.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('fundSize.list')}}"><i class="fas fa-list-alt"></i> Fund Size List</a>
-                                            </li>                              
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
@@ -363,7 +366,7 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "serviceOffer.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('serviceOffer.list')}}"> <i class="fas fa-list-alt"></i> Areas of Advice List</a>
-                                            </li>                                     
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
@@ -381,12 +384,12 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "primaryReason.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('primaryReason.list')}}"><i class="fas fa-list-alt"></i> Primary Region List</a>
-                                            </li>                                     
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
 
-                               
+
 
                                 <?php
                                     $accesses = ['postcode_list', "postcode_deleted_list",'postcode_create', 'postcode_update', 'postcode_delete'];
@@ -403,22 +406,22 @@
                                                 <li class="{{ isset($subNav) && $subNav == "postcode.list" ? 'active-subMenu' : 'none' }}" >
                                                     <a href="{{ route('postcode.list')}}"><i class="fas fa-list-alt"></i> Primary Postcodes List</a>
                                                 </li>
-                                            @endif  
+                                            @endif
                                             @if(App\Http\Controllers\BackEnd\AccessController::checkAccess("postcode_deleted_list"))
                                                 <li class="{{ isset($subNav) && $subNav == "postcode.deleted_list" ? 'active-subMenu' : 'none' }}" >
                                                     <a href="{{ route('postcode.deleted_list')}}"><i class="fas fa-trash"></i> Deleted Primary Postcodes </a>
                                                 </li>
-                                            @endif                               
+                                            @endif
                                         </ul>
                                     </li>
                                 @endif
-                                
+
                                  <!--  Primary Subscription Locations -->
                                 <?php
                                     $accesses = ['subscribePrimaryReason_list', 'subscribePrimaryReason_create', 'subscribePrimaryReason_update', 'subscribePrimaryReason_delete'];
                                 ?>
                                 @if(App\Http\Controllers\BackEnd\AccessController::checkAccess($accesses))
-                                    
+
                                     <li class="pcoded-hasmenu {{ isset($nav) && $nav == 'subscribePrimaryReason' ? 'pcoded-trigger active-menu' : null }}">
                                         <a href="javascript:void(0)">
                                             <span class="pcoded-micon"><i class="fas fa-landmark"></i></span>
@@ -427,7 +430,7 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "subscribePrimaryReason.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('subscribePrimaryReason.list')}}"><i class="fas fa-list-alt"></i> Subscription Regions List</a>
-                                            </li>                                     
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
@@ -445,7 +448,7 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "subscribePostcode.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('subscribePostcode.list')}}"><i class="fas fa-list-alt"></i> Subscription Postcodes List</a>
-                                            </li>                               
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
@@ -463,11 +466,11 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "subscription.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('subscription.list')}}"><i class="fas fa-list-alt"></i> Plan List </a>
-                                            </li>                                     
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
-                                
+
                                 <?php
                                     $accesses = ['testimonial_list', 'testimonial_create', 'testimonial_update', 'testimonial_delete'];
                                 ?>
@@ -481,7 +484,7 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "testimonial.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('testimonial.list')}}"><i class="fas fa-list-alt"></i> Testimonials List </a>
-                                            </li>                                     
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
@@ -499,7 +502,7 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "communication.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('communication.list')}}"><i class="fas fa-list-alt"></i> Advisor Communications List </a>
-                                            </li>                                     
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
@@ -517,7 +520,7 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "blog.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('blog.list')}}"><i class="fas fa-list-alt"></i> Blog Posts List  </a>
-                                            </li>                                     
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
@@ -535,7 +538,7 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "advisor_blog.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('advisor_blog.list')}}"><i class="fas fa-list-alt"></i>Advisor Blog Posts List  </a>
-                                            </li>                                     
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
@@ -553,7 +556,7 @@
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "tips_guides.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('tips_guides.list')}}"><i class="fas fa-list-alt"></i> Tips & Guides List </a>
-                                            </li>                                     
+                                            </li>
                                         </ul>
                                     </li>
                                 @endif
@@ -567,7 +570,7 @@
                                         <a href="{{ route('enquires.list') }}">
                                             <span class="pcoded-micon"><i class="fab fa-staylinked"></i></span>
                                             <span class="pcoded-mtext" > Enquires / Contact Table</span>
-                                        </a>                                        
+                                        </a>
                                     </li>
                                 @endif
 
@@ -580,7 +583,7 @@
                                         <a href="jabascript::;">
                                             <span class="pcoded-micon"><i class="fab fa-staylinked"></i></span>
                                             <span class="pcoded-mtext" > Dynamic Page Content</span>
-                                        </a> 
+                                        </a>
                                         <ul class="pcoded-submenu">
                                             <li class="{{ isset($subNav) && $subNav == "terms_&_condition.list" ? 'active-subMenu' : 'none' }}" >
                                                 <a href="{{ route('terms_&_condition.list') }}"><i class="fas fa-list-alt"></i>Dynamic Page Content List</a>
@@ -611,7 +614,7 @@
                                     $accesses = ['advisor_quick_link_list', 'advisor_quick_link_create', 'advisor_quick_link_edit', 'advisor_quick_link_delete'];
                                 ?>
                                 <!-- Advisor Quick Link -->
-                                @if(App\Http\Controllers\BackEnd\AccessController::checkAccess($accesses))                                    
+                                @if(App\Http\Controllers\BackEnd\AccessController::checkAccess($accesses))
                                     <li class="pcoded-hasmenu {{ isset($nav) && $nav == 'advisor_quick_link' ? 'pcoded-trigger active-menu' : null }}">
                                         <a href="javascript:void(0)">
                                             <span class="pcoded-micon"><i class="fab fa-staylinked"></i></span>
@@ -629,7 +632,7 @@
                                 <?php
                                     $accesses = ['faq_list', 'faq_create', 'faq_edit', 'faq_delete'];
                                 ?>
-                                @if(App\Http\Controllers\BackEnd\AccessController::checkAccess($accesses))                                    
+                                @if(App\Http\Controllers\BackEnd\AccessController::checkAccess($accesses))
                                     <li class="pcoded-hasmenu {{ isset($nav) && $nav == 'faq' ? 'pcoded-trigger active-menu' : null }}">
                                         <a href="javascript:void(0)">
                                             <span class="pcoded-micon"><i class="fab fa-staylinked"></i></span>
@@ -647,7 +650,7 @@
                                 <?php
                                     $accesses = ['social_media_list', 'social_media_create', 'social_media_edit', 'social_media_delete'];
                                 ?>
-                                @if(App\Http\Controllers\BackEnd\AccessController::checkAccess($accesses))                                    
+                                @if(App\Http\Controllers\BackEnd\AccessController::checkAccess($accesses))
                                     <li class="pcoded-hasmenu {{ isset($nav) && $nav == 'social_media' ? 'pcoded-trigger active-menu' : null }}">
                                         <a href="javascript:void(0)">
                                             <span class="pcoded-micon"><i class="fab fa-staylinked"></i></span>
@@ -665,7 +668,7 @@
                                 <?php
                                     $accesses = ['page_list', 'page_create', 'page_edit', 'page_delete'];
                                 ?>
-                                @if(App\Http\Controllers\BackEnd\AccessController::checkAccess($accesses))                                    
+                                @if(App\Http\Controllers\BackEnd\AccessController::checkAccess($accesses))
                                     <li class="pcoded-hasmenu {{ isset($nav) && $nav == 'page' ? 'pcoded-trigger active-menu' : null }}">
                                         <a href="javascript:void(0)">
                                             <span class="pcoded-micon"><i class="fab fa-staylinked"></i></span>
@@ -679,7 +682,7 @@
                                     </li>
                                 @endif
 
-                                
+
 
 
                                 <?php
@@ -704,7 +707,7 @@
                                                 </li>
                                             @endif
                                         </ul>
-                                    </li>                               
+                                    </li>
                                 @endif
 
                                 <?php
@@ -738,9 +741,9 @@
                                             @endif
                                         </ul>
                                     </li>
-                                     
+
                                 @endif
-                                
+
                                 <?php
                                     $accesses = ['setting'];
                                 ?>
@@ -751,8 +754,8 @@
                                             <span class="pcoded-micon"><i class="fas fa-cogs"></i></span>
                                             <span class="pcoded-mtext" >Website Settings</span>
                                         </a>
-                                    </li>   
-                                @endif 
+                                    </li>
+                                @endif
 
                                 <?php
                                     $accesses = ['group_list', 'group_create', 'group_update', 'group_delete'];
@@ -764,10 +767,10 @@
                                             <span class="pcoded-micon"><i class="fas fa-users"></i></span>
                                             <span class="pcoded-mtext" >Group Permissions</span>
                                         </a>
-                                    </li>   
-                                @endif 
+                                    </li>
+                                @endif
 
-                            </ul>                            
+                            </ul>
                         </div>
                     </nav>
                     <div class="pcoded-content">
@@ -775,4 +778,3 @@
                             <div class="main-body">
                                 <div class="page-wrapper">
                                     <div class="page-body">
-                                    

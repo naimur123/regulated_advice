@@ -51,7 +51,7 @@ class AdvisorController extends Controller
             return redirect()->route('advisor.subscription_plan');
         }
         $prev_page_data = json_decode(json_encode($prev_page_data));
-        
+
         $params = [
             "form_url"          => route('advisor.register_setp2'),
             "reasons"           => PrimaryReason::where('publication_status', true)->orderBy("position", "ASC")->get(),
@@ -59,9 +59,9 @@ class AdvisorController extends Controller
             "fund_sizes"        => FundSize::where("publication_status", true)->orderBy("min_fund", "ASC")->get(),
             "advisor"           => $prev_page_data,
         ];
-        
+
         if(isset($prev_page_data->office_manager_id) && !empty($prev_page_data->office_manager_id)){
-            return view('frontEnd.office-manager.office-manager-register-page2', $params);    
+            return view('frontEnd.office-manager.office-manager-register-page2', $params);
         }
         return view('frontEnd.advisor.register-page2', $params);
     }
@@ -79,9 +79,9 @@ class AdvisorController extends Controller
         }else{
             $this->validateStep2Data($request);
         }
-        
+
         try{
-            
+
             DB::beginTransaction();
             $user = $this->createAdvisor($prev_page_data);
             // $user->primary_region_id = $request->primary_region_id;
@@ -104,7 +104,7 @@ class AdvisorController extends Controller
             $billing->billing_company_name = $request->billing_company_name;
             $billing->billing_company_fca_number = $request->billing_company_fca_number;
             $billing->save();
-            
+
             $this->guard()->login($user);
             if( !isset($request->office_manager_id)){
                 (new MatchRating($user))->handel();
@@ -199,7 +199,7 @@ class AdvisorController extends Controller
         $firm->firm_website_address = $data["firm_website_address"] ?? null;
         $firm->linkedin_id          = $data["linkedin_id"] ?? null;
         $firm->save();
-        return $user; 
+        return $user;
     }
 
     /**
@@ -223,7 +223,7 @@ class AdvisorController extends Controller
             "total_question"        => count($advisor->approve_advisor_questions),
             "total_testimonial"     => count($advisor->published_testimonials),
             "total_leads"           => count($advisor->leads),
-            "no_of_auction"         => Auction::count(), 
+            "no_of_auction"         => Auction::count(),
             "dashboard_profile_text"=> $dashboard_profile_text->trems_and_condition ?? "",
             "office_namager_feature"=> $office_namager_feature,
             "my_advisors"           => User::where('office_manager_id', $advisor->id)->get(),
@@ -256,7 +256,7 @@ class AdvisorController extends Controller
         return $this->loadProfile($advisor);
     }
 
-    
+
     /**
      * Load Profile
      */
@@ -294,49 +294,49 @@ class AdvisorController extends Controller
      * Update Advisor Profile
      */
     public function updateProfile(Request $request){
-        
+
         try{
             $validator = Validator::make($request->all(),[
                 "profession_id"     => ['required', 'numeric', 'min:1'],
                 'first_name'        => ['required', 'string', 'max:191'],
                 'last_name'         => ['nullable', 'string', 'max:191'],
-                "phone"             => ['required', 'string', "min:8", "max:13"],
-                'telephone'         => ['nullable', 'string', "min:8", "max:13"],
+                /*"phone"             => ['required', 'string', "min:8", "max:13"],
+                'telephone'         => ['nullable', 'string', "min:8", "max:13"],*/
                 "personal_fca_number"=> ['nullable', 'string', "min:2", "max:30"],
-                "fca_status_date"   => ['nullable', 'date'],            
-                
+                /*"fca_status_date"   => ['nullable', 'date'],*/
+
                 "advisor_type_id.*" => ["required", "numeric"],
                 "address_line_one"  => ['required', 'string', 'min:4', 'max:191'],
                 "address_line_two"  => ['nullable', 'string', 'min:4', 'max:191'],
                 "town"              => ['required', 'string', 'min:2', 'max:191'],
                 "post_code"         => ['required', 'string', 'min:4', 'max:8'],
                 "country"           => ['required', 'string', 'min:2', 'max:100'],
-    
+
                 "service_offered_id.*"          => ["required", "numeric", "min:1"],
-                'primary_region_id'             => ["nullable", "numeric", "min:1"],
+                /*'primary_region_id'             => ["nullable", "numeric", "min:1"],*/
                 "location_postcode_id.*"        => ["nullable", "numeric"],
             ]);
             if($validator->fails()){
                 return back()->with('error', $validator->errors()->first());
             }
 
-            $response =  (new Fetchify())->isValidPhone($request->phone);
+            /*$response =  (new Fetchify())->isValidPhone($request->phone);
             if( !$response["status"] ){
                 return back()->withInput()->withErrors( ["phone" => $response["message"] ]);
-            }
+            }*/
             $response =  (new Fetchify())->isValidPostCode($request->post_code);
             if( !$response["status"] ){
                 return back()->withInput()->withErrors( ["post_code" => $response["message"] ]);
             }
 
             $data = User::find(Auth::user()->id);
-            $data->profession_id = $request->profession_id;            
-            $data->first_name = $request->first_name;            
-            $data->last_name = $request->last_name; 
-            $data->phone = $request->phone;
-            $data->telephone = $request->telephone;
+            $data->profession_id = $request->profession_id;
+            $data->first_name = $request->first_name;
+            $data->last_name = $request->last_name;
+            /*$data->phone = $request->phone;
+            $data->telephone = $request->telephone;*/
             $data->personal_fca_number = $request->personal_fca_number;
-            $data->fca_status_date = $request->fca_status_date;
+            //$data->fca_status_date = $request->fca_status_date;
             $data->address_line_one = $request->address_line_one;
             $data->address_line_two = $request->address_line_two;
             $data->post_code = $request->post_code;
@@ -345,7 +345,7 @@ class AdvisorController extends Controller
             $data->town = $request->town;
             $data->country = $request->country;
             $data->fund_size_id = $request->fund_size_id;
-            $data->primary_region_id = $request->primary_region_id;
+            /*$data->primary_region_id = $request->primary_region_id;*/
             $data->profile_brief = $request->profile_brief;
             $data->advisor_type_id = $request->advisor_type_id;
             $data->service_offered_id = $request->service_offered_id;
@@ -367,7 +367,7 @@ class AdvisorController extends Controller
         if($request->ajax()){
             return $this->loadVisitorDataTable($request);
         }
-        
+
         $params = [
             "nav"           => "dashboard",
             "pageTitle"     => "Your Profile Visit Information",
@@ -464,24 +464,24 @@ class AdvisorController extends Controller
             'billing_company_name'          => ['nullable', 'string', 'min:2', 'max:191'],
             'billing_company_fca_number'    => ['required', 'string', 'min:2', 'max:191'],
         ]);
-            
+
         try{
             if($validator->fails()){
                 return back()->with('error', $validator->errors()->first());
             }
-            
+
             $url = "http://api.postcodes.io/postcodes/$request->billing_post_code/validate";
             $client = new Client();
             $res = $client->get($url);
             $data = json_decode($res->getBody());
-            
+
             if($data->result == true){
                 $url = "http://api.postcodes.io/postcodes/$request->billing_post_code";
                 $client = new Client();
                 $res = $client->get($url);
                 $data = json_decode($res->getBody());
                 $latitude = $data->result->latitude;
-                $longitude  = $data->result->longitude;            
+                $longitude  = $data->result->longitude;
             }else{
                 return back()->with('error',"Invalid postcode")->withInput();
             }
@@ -512,12 +512,12 @@ class AdvisorController extends Controller
             "advisor_blogs" => AdvisorBlog::where("publication_status", 1)->orderBy('id', 'desc')->paginate(10),
             "advisor_quick_links" => AdvisorQuickLink::where("publication_status", 1)->orderBy('id', 'desc')->paginate(10),
             "faqs"          => AdvisorFaq::orderBy("faq_sl", "ASC")->get(),
-        ]; 
+        ];
         return view('frontEnd.plan.subscriptionPlan', $params);
     }
 
     /**
-     * Choose Subscription 
+     * Choose Subscription
      */
     public function subscriptionPlanChoose(Request $request){
         $plan = SubscriptionPlan::where('id', $request->id)->first();
@@ -545,9 +545,9 @@ class AdvisorController extends Controller
     }
 
     /**
-     * Contact with Advisor 
+     * Contact with Advisor
      */
-    public function contact(Request $request){   
+    public function contact(Request $request){
         $leads = Session::has('lead') ? Session::pull('lead') : new Leads();
         if( empty($leads->name) ){
             $this->validate($request, [
@@ -595,8 +595,10 @@ class AdvisorController extends Controller
         $reason_specific_rating_list = User::where('primary_region_id', $advisor->primary_region_id)->select('specific_rating')->get();
         $specific_rating_arr = [];
         foreach($reason_specific_rating_list as $list_arr){
-            foreach($list_arr->specific_rating as $service_offer => $rating){
-                $specific_rating_arr[$service_offer] = ($specific_rating_arr[$service_offer] ?? 0) + $rating;
+            if( isset($list_arr->specific_rating) ){
+                foreach($list_arr->specific_rating as $service_offer => $rating){
+                    $specific_rating_arr[$service_offer] = ($specific_rating_arr[$service_offer] ?? 0) + $rating;
+                }
             }
         }
         foreach($specific_rating_arr as $key => $value){
@@ -624,7 +626,7 @@ class AdvisorController extends Controller
                 $qry->where('name', 'Investment & Savings');
             }
         })->get();
-        
+
         $params = [
             'nav'           => 'marketing_profile',
             'advisor'       => $request->user(),
@@ -648,7 +650,7 @@ class AdvisorController extends Controller
 
     // Sent Verification Email
     public function sendVerificationEmail(Request $request){
-        
+
         try{
             $advisor = $request->user();
             $advisor->notify(new EmailVerification($advisor));

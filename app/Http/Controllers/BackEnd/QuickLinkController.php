@@ -106,7 +106,7 @@ class QuickLinkController extends Controller
             $data->meta_description = $request->meta_description;
             $data->meta_tag = $request->meta_tag;
             $data->publication_status = $request->publication_status;
-            $data->image = $this->uploadImage($request, "image", $this->others_dir, "", "", $data->image);
+            $data->image = $this->uploadImage($request, 'image', $this->others_dir, 400, null, $data->image);
             $data->save();
             $this->success($message);
         }catch(Exception $e){

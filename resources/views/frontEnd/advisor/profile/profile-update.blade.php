@@ -19,8 +19,8 @@
                         <select class="form-control select2" name="profession_id">
                             <option value="">Select Advisor Profession</option>
                             @foreach($professions as $item)
-                                <option value="{{ $item->id }}" {{ old('profession_id') && old('profession_id') == $item->id ? 'selected' : (isset($data->profession_id) && $data->profession_id == $item->id ? "selected" : Null) }}> {{ $item->name }} </option>     
-                            @endforeach                           
+                                <option value="{{ $item->id }}" {{ old('profession_id') && old('profession_id') == $item->id ? 'selected' : (isset($data->profession_id) && $data->profession_id == $item->id ? "selected" : Null) }}> {{ $item->name }} </option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                             </span>
                         @endif
                     </div>
-                </div>                
+                </div>
 
                 <!-- Email -->
                 <div class="col-12 col-sm-6 col-md-4">
@@ -68,9 +68,9 @@
                 </div>
 
                 <!-- Phone Number -->
-                <div class="col-12 col-sm-6 col-md-4">
+                <!--<div class="col-12 col-sm-6 col-md-4">
                     <div class="form-group">
-                        <label>Phone Number <span class="text-danger">*</span> </label>                        
+                        <label>Phone Number <span class="text-danger">*</span> </label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
                             <input type="text" maxlength="15" class="form-control {{ $errors->has('phone') ? ' is-invalid' : 'is-valid' }} verify" data-verify_type="phone" name="phone" value="{{ old("phone") ?? ($data->phone ?? "")}}" required >
@@ -81,10 +81,10 @@
                             </span>
                         @endif
                     </div>
-                </div>
+                </div>-->
 
                 <!-- Telephone Number -->
-                <div class="col-12 col-sm-6 col-md-4 d-none">
+                <!--<div class="col-12 col-sm-6 col-md-4 d-none">
                     <div class="form-group">
                         <label>Assigned Telephone Number</label>
                         <input type="text" maxlength="15" class="form-control{{ $errors->has('telephone') ? ' is-invalid' : '' }}" name="telephone" value="{{ old("telephone") ?? ($data->telephone ?? "")}}"  >
@@ -94,7 +94,7 @@
                             </span>
                         @endif
                     </div>
-                </div>
+                </div>-->
 
                 <!-- Personal FCA Ref. Number -->
                 <div class="col-12 col-sm-6 col-md-4">
@@ -108,9 +108,9 @@
                         @endif
                     </div>
                 </div>
-                
+
                 <!--  FCA Status Effective Date -->
-                <div class="col-12 col-sm-6 col-md-4" style="display: none;">
+                <!--<div class="col-12 col-sm-6 col-md-4" style="display: none;">
                     <div class="form-group">
                         <label>FCA Status Effective Date</label>
                         <input type="date" class="form-control{{ $errors->has('fca_status_date') ? ' is-invalid' : '' }}" name="fca_status_date" value="{{ old("fca_status_date") ?? ($data->fca_status_date ?? "")}}" >
@@ -120,7 +120,7 @@
                             </span>
                         @endif
                     </div>
-                </div>
+                </div>-->
 
                 <!--  Address 1 -->
                 <div class="col-12 col-sm-6 col-md-4">
@@ -204,7 +204,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label>Longitude </label>
-                        <input type="text" class="form-control{{ $errors->has('longitude') ? ' is-invalid' : '' }}" name="longitude" value="{{ old("longitude") ?? ($data->longitude ?? "")}}" required >
+                        <input type="text" class="form-control{{ $errors->has('longitude') ? ' is-invalid' : '' }}" name="longitude" value="{{ old("longitude") ?? ($data->longitude ?? "")}}">
                         @if ($errors->has('longitude'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('longitude') }}</strong>
@@ -213,13 +213,13 @@
                     </div>
                 </div>
 
-                
+
 
                 <!--  Latitude -->
                 <div class="col-4">
                     <div class="form-group">
                         <label>Latitude </label>
-                        <input type="text" class="form-control{{ $errors->has('latitude') ? ' is-invalid' : '' }}" name="latitude" value="{{ old("latitude") ?? ($data->latitude ?? "")}}" required >
+                        <input type="text" class="form-control{{ $errors->has('latitude') ? ' is-invalid' : '' }}" name="latitude" value="{{ old("latitude") ?? ($data->latitude ?? "")}}">
                         @if ($errors->has('latitude'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('latitude') }}</strong>
@@ -237,7 +237,7 @@
                             <option value="1" {{ old('is_live') == '1' ? "selected" : ( isset($data->is_live) && $data->is_live == '1' ? "selected" : Null ) }}>Active</option>
                             <option value="0" {{ old('is_live') == '0' ? "selected" : ( isset($data->is_live) && $data->is_live == '0' ? "selected" : Null ) }}>Pause</option>
                         </select>
-                        @if($errors->has('is_live'))                                
+                        @if($errors->has('is_live'))
                             <span class="text-danger font-10" role="alert">
                                 <strong>{{ $errors->first('is_live') }}</strong>
                             </span>
@@ -246,7 +246,7 @@
                 </div>
 
                 <!-- Select Primary Region -->
-                <div class="col-12 col-sm-6 col-md-4 d-none">
+                <!--<div class="col-12 col-sm-6 col-md-4 d-none">
                     <div class="form-group">
                         <label>Primary Region <span class="text-danger">*</span></label>
                         <select class="form-control select2" name="primary_region_id" required >
@@ -256,7 +256,7 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
+                </div>-->
 
                 <!-- About Me -->
                 <div class="col-12">
@@ -293,26 +293,27 @@
                 </div>
 
                 <div class="col-12">
-                        <hr/>
-                        <h3 class="font-weight-bold">Postcode Areas Covered</h3>
-                @foreach ($reasons as $reason)
-                    <div class="col-12 mt-10 row reason">
-                        <div class="col-12">
-                            <h4 class="p-0 m-0 mt-2">
-                                <label class="font-weight-bold font-16">                                    
-                                    {{$reason->name }}
-                                </label>
-                            </h4>
-                            <div class="line line-blue"></div>
-                        </div>
+                    <hr/>
+                    <h3 class="font-weight-bold">Postcode Areas Covered</h3>
+                    @foreach ($reasons as $reason)
+                        <div class="col-12 mt-10 row reason">
+                            <div class="col-12">
 
-                        @foreach ($reason->location_post_codes as $location)
-                            <div class="col-6 col-sm-4 col-md-3 mt-1 location">
-                                <label> <input type="checkbox" onclick="return false;" value="{{ $location->id }}" name="location_postcode_id[]" {{ isset($data->location_postcode_id) && is_array($data->location_postcode_id) && in_array($location->id, $data->location_postcode_id) ? "checked" : Null }} > {{ $location->full_name }} </label>
+                                <h4 class="p-0 m-0 mt-2">
+                                    <label class="font-weight-bold font-16">
+                                        <input type="checkbox" class="select-all_reason"> {{$reason->name }}
+                                    </label>
+                                </h4>
+                                <div class="line line-blue"></div>
                             </div>
-                        @endforeach
-                    </div>                       
-                @endforeach
+
+                            @foreach ($reason->location_post_codes as $location)
+                                <div class="col-6 col-sm-4 col-md-3 mt-1 location">
+                                    <label> <input type="checkbox" value="{{ $location->id }}" name="location_postcode_id[]" {{ isset($data->location_postcode_id) && is_array($data->location_postcode_id) && in_array($location->id, $data->location_postcode_id) ? "checked" : Null }} > {{ $location->full_name }} </label>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endforeach
                 </div>
 
                 <!-- Advisor Image -->
@@ -371,7 +372,7 @@
         $(".advisor_type").each(function(index, checkbox){
             if($(checkbox).prop("checked") == true){
                 type_fillup = true;
-            }            
+            }
         });
         if(!type_fillup){
             e.preventDefault();
@@ -380,7 +381,7 @@
         }else{
             $("#type_error").text("");
         }
-        
+
     });
 </script>
 
